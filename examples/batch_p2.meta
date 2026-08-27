@@ -1,0 +1,4 @@
+title: Hardened Job with full security posture
+author: this project
+license: n/a - author-written
+note: author-written for this study, not sourced. Stack Overflow answers for this resource type are predominantly troubleshooting fragments rather than complete manifests; carries securityContext at pod and container level, dropped capabilities and resource limits

@@ -1,0 +1,22 @@
+# generated data — large, and regenerable from the scripts
+runs/
+runs_excluded/
+results/
+results_excluded/
+prompts/
+batch_log.jsonl
+*.out
+pod_lifecycle.log
+
+# outputs
+*.xlsx
+~$*
+
+# secrets — nothing here should ever be committed, but be explicit
+.env
+*.key
+
+# python
+__pycache__/
+*.pyc
+*.bak

@@ -1,0 +1,57 @@
+scanner,rule_id,canonical_fault,severity,cis_reference,note
+checkov,CKV_K8S_20,allow_privilege_escalation,HIGH,CIS 5.2.5,Container allows privilege escalation
+checkov,CKV_K8S_23,run_as_root,HIGH,CIS 5.2.6,Container may run as root user
+checkov,CKV_K8S_16,privileged_container,CRITICAL,CIS 5.2.1,Privileged container
+checkov,CKV_K8S_22,writable_root_filesystem,MEDIUM,CIS 5.2.x,Root filesystem is writable
+checkov,CKV_K8S_28,capabilities_not_dropped,HIGH,CIS 5.2.9,NET_RAW or ALL capabilities not dropped
+checkov,CKV_K8S_37,capabilities_not_dropped,HIGH,CIS 5.2.9,Excessive capabilities retained
+checkov,CKV_K8S_43,image_not_digest_pinned,LOW,-,Image not pinned by digest
+checkov,CKV_K8S_14,image_tag_not_fixed,MEDIUM,-,Image tag not fixed
+checkov,CKV_K8S_15,image_pull_policy_always,LOW,-,imagePullPolicy not Always
+checkov,CKV_K8S_11,no_cpu_limit,LOW,-,CPU limit not set
+checkov,CKV_K8S_12,no_memory_limit,MEDIUM,-,Memory limit not set
+checkov,CKV_K8S_13,no_memory_request,LOW,-,Memory request not set
+checkov,CKV_K8S_10,no_cpu_request,LOW,-,CPU request not set
+checkov,CKV_K8S_21,default_namespace_used,LOW,CIS 5.7.4,Default namespace used
+checkov,CKV_K8S_29,no_security_context,HIGH,CIS 5.7.3,securityContext not applied
+checkov,CKV_K8S_30,no_security_context,HIGH,CIS 5.7.3,securityContext not applied at container level
+checkov,CKV_K8S_31,no_seccomp_profile,MEDIUM,CIS 5.7.2,seccomp profile not set
+checkov,CKV_K8S_38,sa_token_automount,MEDIUM,CIS 5.1.6,Service account token automounted
+checkov,CKV_K8S_40,run_as_low_uid,MEDIUM,CIS 5.2.6,UID below 10000
+checkov,CKV_K8S_8,no_liveness_probe,LOW,-,Liveness probe missing
+checkov,CKV_K8S_9,no_readiness_probe,LOW,-,Readiness probe missing
+trivy,KSV-0001,allow_privilege_escalation,HIGH,CIS 5.2.5,Privilege escalation allowed
+trivy,KSV-0003,capabilities_not_dropped,HIGH,CIS 5.2.9,Default capabilities not dropped
+trivy,KSV-0011,no_cpu_limit,LOW,-,CPU limit not set
+trivy,KSV-0012,run_as_root,HIGH,CIS 5.2.6,runAsNonRoot not set
+trivy,KSV-0014,writable_root_filesystem,MEDIUM,CIS 5.2.x,Root filesystem not read-only
+trivy,KSV-0015,no_cpu_request,LOW,-,CPU request not set
+trivy,KSV-0016,no_memory_request,LOW,-,Memory request not set
+trivy,KSV-0017,privileged_container,CRITICAL,CIS 5.2.1,Privileged container
+trivy,KSV-0018,no_memory_limit,MEDIUM,-,Memory limit not set
+trivy,KSV-0020,run_as_low_uid,MEDIUM,CIS 5.2.6,UID below 10000
+trivy,KSV-0021,run_as_low_gid,LOW,CIS 5.2.6,GID below 10000
+trivy,KSV-0030,no_seccomp_profile,MEDIUM,CIS 5.7.2,seccomp profile not set
+trivy,KSV-0104,no_seccomp_profile,MEDIUM,CIS 5.7.2,seccomp unconfined
+trivy,KSV-0106,capabilities_not_dropped,HIGH,CIS 5.2.9,Capabilities not dropped to ALL
+trivy,KSV-0110,sa_token_automount,MEDIUM,CIS 5.1.6,Default service account used
+trivy,KSV-0116,image_tag_not_fixed,MEDIUM,-,Latest tag used
+kube-linter,privilege-escalation-container,allow_privilege_escalation,HIGH,CIS 5.2.5,allowPrivilegeEscalation true
+kube-linter,run-as-non-root,run_as_root,HIGH,CIS 5.2.6,Container may run as root
+kube-linter,privileged-container,privileged_container,CRITICAL,CIS 5.2.1,Privileged container
+kube-linter,privileged-ports,privileged_port,HIGH,-,Port below 1024 exposed
+kube-linter,drop-net-raw-capability,capabilities_not_dropped,HIGH,CIS 5.2.9,NET_RAW not dropped
+kube-linter,no-read-only-root-fs,writable_root_filesystem,MEDIUM,CIS 5.2.x,Root filesystem writable
+kube-linter,unset-cpu-requirements,no_cpu_limit,LOW,-,CPU requirements unset
+kube-linter,unset-memory-requirements,no_memory_limit,MEDIUM,-,Memory requirements unset
+kube-linter,latest-tag,image_tag_not_fixed,MEDIUM,-,Latest tag used
+kube-linter,no-liveness-probe,no_liveness_probe,LOW,-,Liveness probe missing
+kube-linter,no-readiness-probe,no_readiness_probe,LOW,-,Readiness probe missing
+kube-linter,default-service-account,sa_token_automount,MEDIUM,CIS 5.1.6,Default service account used
+kube-linter,non-existent-service-account,broken_sa_reference,MEDIUM,-,Referenced service account does not exist
+kube-linter,dangling-service,dangling_service,MEDIUM,-,Service selector matches no pods
+kube-linter,mismatching-selector,dangling_service,MEDIUM,-,Selector does not match template labels
+checkov,CKV2_K8S_6,no_network_policy,MEDIUM,CIS 5.3.2,No NetworkPolicy
+trivy,KSV-0004,capabilities_not_dropped,HIGH,CIS 5.2.9,Default capabilities not dropped
+trivy,KSV-0118,no_security_context,HIGH,CIS 5.7.3,Default security context configured
+kube-linter,no-anti-affinity,no_pod_anti_affinity,LOW,-,Availability not security; recorded but not gating

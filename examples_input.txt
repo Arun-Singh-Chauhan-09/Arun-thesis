@@ -1,0 +1,109 @@
+# Paste one block per slot. Metadata first, then a line with only
+# three dashes, then the manifest. Leave a slot blank to skip it.
+#
+# Accepted sources: stackoverflow.com (score required),
+# kubernetes.io, github.com/kubernetes. The licence defaults to
+# match the source if you leave it blank.
+#
+# The three dashes on their own line separate metadata from YAML.
+# If a manifest itself needs --- (multiple documents), that is fine:
+# only the FIRST --- after the metadata is treated as the separator.
+
+### workload_p1
+# want: Deployment / StatefulSet / DaemonSet / Pod - typical, widely-upvoted but UNHARDENED
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### workload_p2
+# want: Deployment / StatefulSet / DaemonSet / Pod - HARDENED - securityContext at pod AND container level, dropped capabilities, resource limits
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### workload_p3
+# want: Deployment / StatefulSet / DaemonSet / Pod - NEGATIVE example paired with its CORRECTION (paste both, separated by ---)
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### batch_p1
+# want: Job / CronJob - typical, widely-upvoted but UNHARDENED
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### batch_p2
+# want: Job / CronJob - HARDENED - securityContext at pod AND container level, dropped capabilities, resource limits
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### batch_p3
+# want: Job / CronJob - NEGATIVE example paired with its CORRECTION (paste both, separated by ---)
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### policy_p1
+# want: RBAC / NetworkPolicy / ResourceQuota - typical, widely-upvoted but UNHARDENED
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### policy_p2
+# want: RBAC / NetworkPolicy / ResourceQuota - HARDENED - securityContext at pod AND container level, dropped capabilities, resource limits
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+
+
+### policy_p3
+# want: RBAC / NetworkPolicy / ResourceQuota - NEGATIVE example paired with its CORRECTION (paste both, separated by ---)
+title:
+url:
+author:
+score:
+license: CC BY-SA 4.0
+note:
+---
+

@@ -1,0 +1,4 @@
+title: Least-privilege RBAC with a default-deny NetworkPolicy
+author: this project
+license: n/a - author-written
+note: author-written for this study, not sourced. Stack Overflow answers for this resource type are predominantly troubleshooting fragments rather than complete manifests; narrow verbs and resources, service account token not mounted, ingress denied by default

@@ -1,0 +1,4 @@
+title: Unhardened CronJob, minimal fields only
+author: this project
+license: n/a - author-written
+note: author-written for this study, not sourced. Stack Overflow answers for this resource type are predominantly troubleshooting fragments rather than complete manifests; shape follows the CronJob example in the Kubernetes documentation

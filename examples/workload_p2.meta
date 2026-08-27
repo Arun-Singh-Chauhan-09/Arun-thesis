@@ -1,0 +1,5 @@
+title: Configure a Security Context for a Pod or Container
+url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+author: Kubernetes Authors
+license: CC BY 4.0
+note: composite - securityContext fields drawn from the Pod examples on this page and assembled into a Deployment; resource limits and emptyDir volumes added so readOnlyRootFilesystem does not break nginx

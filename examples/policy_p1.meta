@@ -1,0 +1,4 @@
+title: Permissive RBAC granting wildcard verbs and resources
+author: this project
+license: n/a - author-written
+note: author-written for this study, not sourced. Stack Overflow answers for this resource type are predominantly troubleshooting fragments rather than complete manifests; for the policy family 'unhardened' means broad permissions, since these manifests create no Pods
