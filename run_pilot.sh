@@ -45,7 +45,7 @@ kubectl --context "kind-$CLUSTER" get nodes --no-headers
 
 echo "== reset =="
 # Start clean so exactly one generation is present, not last run's leftovers.
-rm -rf runs/* results/*
+#rm -rf runs/* results/*
 mkdir -p runs results
 
 echo "== generate =="

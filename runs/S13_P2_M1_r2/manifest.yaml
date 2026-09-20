@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-budget
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-with-budget
+  template:
+    metadata:
+      labels:
+        app: app-with-budget
+    spec:
+      containers:
+      - name: app
+        image: busybox:1.34
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-with-budget-budget
+spec:
+  selector:
+    matchLabels:
+      app: app-with-budget
+  minAvailable: 1
+  maxUnavailable: 1

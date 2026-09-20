@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-resources
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-with-resources
+  template:
+    metadata:
+      labels:
+        app: app-with-resources
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.27-alpine
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: app-with-resources

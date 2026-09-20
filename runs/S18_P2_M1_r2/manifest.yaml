@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spread-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spread-app
+  template:
+    metadata:
+      labels:
+        app: spread-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: ScheduleAnyway
+    labelSelector:
+      matchLabels:
+        app: spread-app
+---
+apiVersion: v1
+kind: PodDisruptionBudget
+metadata:
+  name: spread-app-budget
+spec:
+  selector:
+    matchLabels:
+      app: spread-app
+  minAvailable: 2
+  maxUnavailable: 1

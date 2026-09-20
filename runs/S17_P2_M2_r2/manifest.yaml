@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stable-network
+spec:
+  clusterIP: None
+  selector:
+    app: stable-pods
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stable-pods
+spec:
+  serviceName: stable-network
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stable-pods
+  template:
+    metadata:
+      labels:
+        app: stable-pods
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+          name: http

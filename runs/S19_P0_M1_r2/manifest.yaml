@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: application-pod
+spec:
+  containers:
+  - name: application-container
+    image: busybox
+    command: ["sleep", "9999"]
+  tolerations:
+  - key: dedicated
+    operator: Equal
+    value: batch
+    effect: NoSchedule
+  nodeSelector:
+    disktype: ssd
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: application-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: application
+  template:
+    metadata:
+      labels:
+        app: application
+    spec:
+      containers:
+      - name: application-container
+        image: busybox
+        command: ["sleep", "9999"]
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: batch
+        effect: NoSchedule
+      nodeSelector:
+        disktype: ssd

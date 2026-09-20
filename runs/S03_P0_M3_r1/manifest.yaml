@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.yaml: |
+    app:
+      name: sample-app
+      environment: production
+      log_level: info
+    settings:
+      max_connections: 100
+      timeout_seconds: 30
+  app.properties: |
+    key1=value1
+    key2=value2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-reader-app
+  labels:
+    app: config-reader-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: config-reader-app
+  template:
+    metadata:
+      labels:
+        app: config-reader-app
+    spec:
+      containers:
+        - name: config-reader-app
+          image: busybox:1.36
+          command: ["sh", "-c", "cat /etc/config/config.yaml && sleep 3600"]
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app-config

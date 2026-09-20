@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-pdb
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-with-pdb
+  template:
+    metadata:
+      labels:
+        app: app-with-pdb
+    spec:
+      containers:
+      - name: app
+        image: nginx:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        ports:
+        - containerPort: 80
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-with-pdb-pdb
+spec:
+  selector:
+    matchLabels:
+      app: app-with-pdb
+  minAvailable: 1
+  maxUnavailable: 2

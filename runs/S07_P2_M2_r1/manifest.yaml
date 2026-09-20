@@ -1,0 +1,37 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: migration
+        image: postgres:16-alpine
+        command:
+        - sh
+        - -c
+        - |
+          echo "Running database migration..."
+          # Example migration command - replace with actual migration tool
+          psql "$DATABASE_URL" -f /migrations/001_initial.sql
+        env:
+        - name: DATABASE_URL
+          value: "postgres://user:password@db-service:5432/appdb"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        volumeMounts:
+        - name: migrations
+          mountPath: /migrations
+          readOnly: true
+      volumes:
+      - name: migrations
+        configMap:
+          name: db-migration-scripts

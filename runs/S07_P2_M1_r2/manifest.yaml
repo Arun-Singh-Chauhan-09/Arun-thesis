@@ -1,0 +1,96 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration-task
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app: db-migration-task
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: migration
+        image: postgres:14
+        imagePullPolicy: Always
+        command: ["sh", "-c", "psql -h localhost -U postgres -d mydb -f /migration/sql/migrate.sql"]
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        volumeMounts:
+        - name: migration-scripts
+          mountPath: /migration/sql
+      volumes:
+      - name: migration-scripts
+        emptyDir: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-connection
+data:
+  DB_HOST: "localhost"
+  DB_USER: "postgres"
+  DB_NAME: "mydb"
+  DB_PASSWORD: "mysecretpassword"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db-service
+spec:
+  selector:
+    app: db-pod
+  ports:
+  - name: db-port
+    port: 5432
+    targetPort: 5432
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-pod
+  labels:
+    app: db-pod
+spec:
+  containers:
+  - name: db
+    image: postgres:14
+    ports:
+    - containerPort: 5432
+    env:
+    - name: POSTGRES_USER
+      value: "postgres"
+    - name: POSTGRES_DB
+      value: "mydb"
+    - name: POSTGRES_PASSWORD
+      value: "mysecretpassword"
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 10001
+      runAsGroup: 10001
+      fsGroup: 10001
+      seccompProfile:
+        type: RuntimeDefault

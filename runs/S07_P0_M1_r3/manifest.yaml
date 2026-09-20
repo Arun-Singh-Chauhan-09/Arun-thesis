@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: database-migration
+spec:
+  template:
+    spec:
+      containers:
+      - name: migration
+        image: migration-image
+        command: ["migration-command"]
+      restartPolicy: OnFailure
+  backoffLimit: 2

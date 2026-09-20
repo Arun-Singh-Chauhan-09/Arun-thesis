@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stateful-db
+spec:
+  serviceName: stateful-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stateful-db
+  template:
+    metadata:
+      labels:
+        app: stateful-db
+    spec:
+      containers:
+      - name: db
+        image: postgres:16
+        ports:
+        - containerPort: 5432
+        volumeMounts:
+        - name: data
+          mountPath: /var/lib/postgresql/data
+        env:
+        - name: POSTGRES_PASSWORD
+          value: example
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 5Gi

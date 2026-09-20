@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-with-log-sidecar
+  labels:
+    app: log-sidecar-demo
+spec:
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 3000
+    fsGroup: 2000
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: main
+    image: busybox:1.36
+    imagePullPolicy: Always
+    command:
+    - sh
+    - -c
+    - |
+      while true; do
+        echo "$(date -u +'%Y-%m-%dT%H:%M:%SZ') - log entry" >> /var/log/app/output.log
+        sleep 5
+      done
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: RuntimeDefault
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log/app
+  - name: log-tailer
+    image: busybox:1.36
+    imagePullPolicy: Always
+    command:
+    - sh
+    - -c
+    - "tail -n+1 -f /var/log/app/output.log"
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: RuntimeDefault
+    resources:
+      requests:
+        cpu: "25m"
+        memory: "32Mi"
+      limits:
+        cpu: "100m"
+        memory: "64Mi"
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log/app
+      readOnly: true
+  volumes:
+  - name: log-volume
+    emptyDir: {}

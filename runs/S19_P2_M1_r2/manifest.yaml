@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssd-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ssd-app
+  template:
+    metadata:
+      labels:
+        app: ssd-app
+    spec:
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: batch
+        effect: NoSchedule
+      nodeSelector:
+        disktype: ssd
+      containers:
+      - name: app
+        image: nginx:latest
+        imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: taint-pod
+spec:
+  containers:
+  - name: pause
+    image: k8s.gcr.io/pause:3.6
+  tolerations:
+  - key: dedicated
+    operator: Equal
+    value: batch
+    effect: NoSchedule

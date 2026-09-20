@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-with-logging-sidecar
+  labels:
+    app: app-with-logging-sidecar
+spec:
+  containers:
+  - name: main-app
+    image: busybox:1.36
+    command:
+    - /bin/sh
+    - -c
+    - >
+      i=0;
+      while true;
+      do
+        echo "$(date) INFO iteration=$i: application is running" >> /var/log/app/app.log;
+        i=$((i+1));
+        sleep 5;
+      done
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/app
+  - name: log-sidecar
+    image: busybox:1.36
+    command:
+    - /bin/sh
+    - -c
+    - tail -n+1 -F /var/log/app/app.log
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/app
+      readOnly: true
+  volumes:
+  - name: shared-logs
+    emptyDir: {}

@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: stable-network-service
+spec:
+  clusterIP: None
+  selector:
+    app: stable-network-app
+  ports:
+  - port: 80
+    targetPort: 80
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stable-network-app
+spec:
+  serviceName: stable-network-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stable-network-app
+  template:
+    metadata:
+      labels:
+        app: stable-network-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"

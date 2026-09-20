@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: migration
+        image: my-registry/db-migration:latest
+        command: ["/bin/sh", "-c"]
+        args: ["echo 'Running migration' && ./migrate"]

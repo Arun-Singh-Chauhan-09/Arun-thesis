@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: resource-limited-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: resource-limited-app
+  template:
+    metadata:
+      labels:
+        app: resource-limited-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: resource-limited-app-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: resource-limited-app

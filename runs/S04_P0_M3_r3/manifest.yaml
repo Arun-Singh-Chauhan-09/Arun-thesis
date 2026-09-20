@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+type: Opaque
+data:
+  password: cGFzc3dvcmQxMjM=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-db-password
+  labels:
+    app: app-with-db-password
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-with-db-password
+  template:
+    metadata:
+      labels:
+        app: app-with-db-password
+    spec:
+      containers:
+        - name: app
+          image: nginx:latest
+          env:
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-credentials
+                  key: password
+          ports:
+            - containerPort: 80

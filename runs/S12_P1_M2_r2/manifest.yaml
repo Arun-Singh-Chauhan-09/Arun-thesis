@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-probes
+spec:
+  selector:
+    matchLabels:
+      app: app-with-probes
+  template:
+    metadata:
+      labels:
+        app: app-with-probes
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3

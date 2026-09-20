@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.yaml: |
+    server:
+      port: 8080
+    database:
+      host: localhost
+      port: 5432
+    feature_flags:
+      new_ui: "true"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-app
+spec:
+  selector:
+    matchLabels:
+      app: config-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/app-config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config

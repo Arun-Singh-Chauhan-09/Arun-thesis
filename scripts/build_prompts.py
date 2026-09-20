@@ -8,7 +8,7 @@ DESIGN - quality gradient, one example per condition
     P0  task only, no reference example        baseline
     P1  a typical, unhardened example          do mediocre examples help?
     P2  a hardened example                     does a good example help more?
-    P3  a negative example + its correction    does explicit contrast help?
+    P3  two hardened examples (cumulative)     does a second good example help?
 
 EXAMPLES ARE GROUPED BY RESOURCE FAMILY
 Every scenario receives an example from its own family, so the model never
@@ -118,10 +118,10 @@ CONDITION_DESC = {
            "quick answer practitioners copy most often"),
     "P2": ("a HARDENED manifest: securityContext at pod AND container level, "
            "dropped capabilities, resource requests and limits"),
-    "P3": ("a NEGATIVE example paired with its CORRECTION: an insecure "
-           "manifest (root user, no resource limits, privilege escalation "
-           "allowed) shown alongside the fixed version, so the contrast "
-           "between the two is explicit"),
+    "P3": ("TWO hardened examples: the P2 manifest plus a second, "
+           "different hardened manifest of another resource in the same "
+           "family; both are secure, testing whether a second good "
+           "example helps beyond the first"),
 }
 
 PREAMBLE = ("You are given a Kubernetes task. Produce the Kubernetes manifest "
@@ -303,33 +303,33 @@ def load_example(stem):
 
 def compose_p3(family):
     """
-    Build the P3 example by pairing the family's P1 and P2 manifests.
+    Build the P3 example from TWO hardened manifests.
 
-    P3 is defined as a negative example shown alongside its correction. The
-    unhardened P1 manifest and the hardened P2 manifest already are exactly
-    that pair, so composing them is faithful to the definition and avoids
-    sourcing a third manifest whose only job is to restate the contrast.
+    P3 is the two-example condition: the hardened P2 manifest, followed by a
+    second, different hardened manifest of another resource in the same family
+    (stored as <family>_p3b.yaml). Both examples are secure, so P3 asks whether
+    a second good example improves security beyond the first - it is not a
+    negative/positive contrast.
     """
-    p1 = manifest_body(stem_for(family, "P1"))
     p2 = manifest_body(stem_for(family, "P2"))
-    if not p1 or not p2:
+    p3b = manifest_body(f"{family}_p3b")
+    if not p2 or not p3b:
         return None
-    return (f"# INSECURE - do not produce manifests like this\n{p1}\n"
+    return (f"# HARDENED EXAMPLE 1\n{p2}\n"
             f"---\n"
-            f"# CORRECTED - the same workload, hardened\n{p2}")
+            f"# HARDENED EXAMPLE 2 - a different resource, also hardened\n{p3b}")
 
 
 def compose_p3_meta(family):
-    m1 = read_meta(stem_for(family, "P1"))
     m2 = read_meta(stem_for(family, "P2"))
     return {
-        "title": "Composed contrast: unhardened example and its correction",
-        "url": m1.get("url", ""),
-        "author": m1.get("author", ""),
-        "license": m1.get("license", "CC BY 4.0"),
-        "note": (f"composed by this project from the P1 manifest "
-                 f"({m1.get('url', '?')}) and the P2 manifest "
-                 f"({m2.get('url', '?')}); no third source"),
+        "title": "Two hardened examples of the same family",
+        "url": m2.get("url", ""),
+        "author": m2.get("author", ""),
+        "license": m2.get("license", "CC BY 4.0"),
+        "note": (f"composed by this project from the P2 hardened manifest and "
+                 f"a second hardened manifest ({family}_p3b) of a different "
+                 f"resource in the same family; both examples are secure"),
     }
 
 

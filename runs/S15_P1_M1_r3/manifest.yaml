@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: limited-namespace
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: cpu-mem-quota
+spec:
+  hard:
+    cpu: "4"
+    memory: 8Gi

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collection-agent
+spec:
+  selector:
+    matchLabels:
+      app: log-collection-agent
+  template:
+    metadata:
+      labels:
+        app: log-collection-agent
+    spec:
+      containers:
+      - name: log-collection-agent
+        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+        - name: conf
+          mountPath: /etc/fluent
+      volumes:
+      - name: logs
+        hostPath:
+          path: /var/log
+      - name: conf
+        configMap:
+          name: log-collection-agent-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-collection-agent-config
+data:
+  fluent.conf: |
+    <source>
+      @type tail
+      path /var/log/ *.log
+      pos_file /var/log/ fluentd.pos
+      tag kubernetes.*
+    </source>
+    <match kubernetes.**>
+      @type elasticsearch
+      host elasticsearch
+      port 9200
+      index_name kubernetes
+    </match>
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: log-collection-agent-budget
+spec:
+  selector:
+    matchLabels:
+      app: log-collection-agent
+  minAvailable: 1
+  maxUnavailable: 1

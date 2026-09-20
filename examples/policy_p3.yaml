@@ -1,31 +1,4 @@
-# INSECURE - do not produce manifests like this
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: app-account
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: app-role
-rules:
-- apiGroups: ["*"]
-  resources: ["*"]
-  verbs: ["*"]
----
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: app-role-binding
-subjects:
-- kind: ServiceAccount
-  name: app-account
-roleRef:
-  kind: Role
-  name: app-role
-  apiGroup: rbac.authorization.k8s.io
----
-# CORRECTED - the same workload, hardened
+# HARDENED EXAMPLE 1
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -61,3 +34,31 @@ spec:
   podSelector: {}
   policyTypes:
   - Ingress
+---
+# HARDENED EXAMPLE 2 - a different resource, also hardened
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: config-reader
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: config-reader
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: config-reader
+subjects:
+- kind: ServiceAccount
+  name: config-reader
+roleRef:
+  kind: Role
+  name: config-reader
+  apiGroup: rbac.authorization.k8s.io

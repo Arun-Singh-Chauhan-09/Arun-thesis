@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+type: Opaque
+stringData:
+  DB_PASSWORD: "S3cureP@ssw0rd"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-db-secret
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-with-db-secret
+  template:
+    metadata:
+      labels:
+        app: app-with-db-secret
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: DB_PASSWORD
+        ports:
+        - containerPort: 80
