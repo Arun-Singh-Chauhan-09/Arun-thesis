@@ -7,8 +7,3 @@ __pycache__/
 *.pyc
 *.bak
 pod_lifecycle.log
-
-# local backup / superseded data — not needed in the repo
-results_excluded/
-runs_excluded/
-results_excluded_oldP3/
