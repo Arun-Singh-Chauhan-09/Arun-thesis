@@ -4,9 +4,26 @@ Empirical benchmark measuring whether LLM-generated Kubernetes manifests are bot
 **deployable** and **secure**. Supporting code for the MEng thesis *Security and
 Deployability of LLM-Generated Kubernetes Manifests: An Empirical Benchmark Study*.
 
-Each generated manifest is validated, deployed to a live `kind` cluster, probed for
-intended behaviour, and scanned by three security scanners. It is then classified as
-`INVALID`, `MISCONFIGURED`, or `CLEAN`.
+Every generated manifest is validated, deployed to a live `kind` cluster, probed for
+its intended behaviour, and scanned by three security scanners. It is then classified
+as `INVALID`, `MISCONFIGURED`, or `CLEAN`. The headline metric is the **Secure
+Deployment Rate (SDR)** — the share of generations that pass all six checks.
+
+---
+
+## What the study found
+
+From 720 generations (three models × four prompting conditions × 20 scenarios × three
+samples):
+
+- **27.6%** were `CLEAN`, **63.6%** `MISCONFIGURED`, **8.8%** `INVALID`.
+- SDR by model: Llama 3.3 70B **22.9%**, DeepSeek Chat **24.2%**, Claude Sonnet 5 **35.8%**.
+- A reference example only helps when it is itself hardened: the pooled clean rate moves
+  from **15.6%** (no example) to **16.7%** (unhardened example), then jumps to **31.7%**
+  (one hardened example) and **46.7%** (two hardened examples).
+
+Deployability and security are separate axes: most failures happen *after* the syntax
+and schema gates — at readiness (K4) and security (K6), not at K1/K2.
 
 ---
 
@@ -14,15 +31,32 @@ intended behaviour, and scanned by three security scanners. It is then classifie
 
 | Dimension | Values | Count |
 |---|---|---|
-| Scenarios | S01 – S20 | 20 |
-| Prompting conditions | P0 zero-shot, P1 one-shot, P2 two-shot, P4 four-shot | 4 |
+| Scenarios | S01 – S20 (workload / batch / policy families) | 20 |
+| Prompting conditions | P0 Zero-Shot, P1 Non-Plausible, P2 Plausible, P3 Plausible Pair | 4 |
 | Models | M1, M2, M3 | 3 |
-| Samples per cell | independent generations | 3 |
+| Samples per cell | independent generations, temperature 1.0 | 3 |
 | **Total manifests** | 20 × 4 × 3 × 3 | **720** |
 
-Primary outcome is the **Secure Deployment Rate (SDR)**: manifests classified `CLEAN`
-divided by all generations attempted. `INVALID` generations stay in the denominator —
-failing to produce valid YAML is itself a meaningful result.
+**Prompting conditions** differ only in the reference example supplied with the prompt:
+
+| Condition | Reference example supplied |
+|---|---|
+| P0 — Zero-Shot | none (task and output rules only) |
+| P1 — Non-Plausible | one *unhardened* example |
+| P2 — Plausible | one *hardened* example |
+| P3 — Plausible Pair | two *hardened* examples |
+
+**Models** are each called through an OpenAI-compatible chat-completions endpoint, so
+only the model identifier, base URL, and credential differ:
+
+| Label | Model | Provider |
+|---|---|---|
+| M1 | Llama 3.3 70B Instruct Turbo | Together AI |
+| M2 | DeepSeek Chat | DeepSeek |
+| M3 | Claude Sonnet 5 | Anthropic |
+
+`INVALID` generations stay in the SDR denominator — failing to produce valid YAML is
+itself a meaningful result.
 
 ---
 
@@ -49,21 +83,24 @@ pip install openai openpyxl
 
 ## Setup
 
-**1. API key.** The generator reads it from the environment — never commit it.
+**1. Model credentials.** The three providers are configured in the `MODELS` block at
+the top of `scripts/generate.py` (model ID, base URL, and the environment variable each
+key is read from). Export the key for every provider you intend to run — never commit
+them (`.gitignore` already excludes `.env` and `*.key`):
 
 ```bash
-export GEMINI_API_KEY="your-key-here"
+export TOGETHER_API_KEY="your-together-key"     # M1  (Llama 3.3 70B)
+export DEEPSEEK_API_KEY="your-deepseek-key"     # M2  (DeepSeek Chat)
+export ANTHROPIC_API_KEY="your-anthropic-key"   # M3  (Claude Sonnet 5)
 ```
 
-Persist it across terminals:
-
-```bash
-echo 'export GEMINI_API_KEY="your-key-here"' >> ~/.bashrc && source ~/.bashrc
-```
+> The exact variable names above are whatever `scripts/generate.py` reads — check the
+> `MODELS` block and set them to match. Persist keys across terminals by appending the
+> `export` lines to `~/.bashrc` and running `source ~/.bashrc`.
 
 **2. Cluster.** Pin the node image to the version named in the methodology. Running
 `kind create cluster` without `--image` yields whatever the installed kind binary
-defaults to, which will not match the thesis target.
+defaults to, which will not match the thesis target (v1.31.0).
 
 ```bash
 kind create cluster --name llm-k8s-bench --image kindest/node:v1.31.0
@@ -75,28 +112,60 @@ the distro. With native Docker Engine: `sudo service docker start`.
 
 ---
 
-## Running
+## How the pipeline works
 
-Single-cell pilot, end to end:
+Each generation flows through five stages; `run_batch.py` orchestrates them across every
+cell of the design.
+
+```
+build_prompts.py  →  generate.py  →  extract.py  →  evaluate.py  →  report.py
+   prompts/           runs/<id>/       runs/<id>/     results/<id>     report.xlsx
+   (corpus)           response,        manifest.yaml  .json            + figures/
+                      generation.json                 (K1–K6 verdict)
+```
+
+1. **`build_prompts.py`** assembles the prompt corpus in `prompts/` — each scenario
+   paired with a prompting condition and, for the example-bearing conditions, a
+   family-matched reference manifest.
+2. **`generate.py`** sends each prompt to each model (temperature 1.0, three samples)
+   and writes the raw response to `runs/<id>/`.
+3. **`extract.py`** recovers the fenced YAML from each response verbatim into
+   `runs/<id>/manifest.yaml`.
+4. **`evaluate.py`** runs the K1–K6 ladder against a live cluster, classifies the
+   generation, and tears the namespace down — writing the verdict to `results/<id>.json`.
+5. **`report.py`** aggregates every result into `report.xlsx` and renders the figures
+   into `figures/`.
+
+### Full study
+
+```bash
+python3 scripts/run_batch.py                 # generate + evaluate all 720 cells (hours)
+python3 scripts/report.py --all              # build report.xlsx + figures/
+```
+
+`report.py` flags: `--excel report.xlsx` (workbook only), `--charts figures/` (PNGs
+only), `--all` (both, plus a printed text summary), `--model M3 --condition P2` (filter).
+
+### Single-cell smoke test
 
 ```bash
 bash run_pilot.sh
 ```
 
-This runs prechecks → cluster → reset → generate → extract → evaluate → workbook, and
-writes `KPI_result.xlsx`.
+Runs prechecks → cluster → reset → generate → extract → evaluate → workbook for one cell
+and writes `KPI_result.xlsx`. Handy for verifying the toolchain before a long batch.
 
-Stages can also be run individually:
+### Individual stages
 
 ```bash
 python3 scripts/generate.py --scenario S01 --condition P0 --model M1 --samples 1
 python3 scripts/extract.py  --all
 python3 scripts/evaluate.py --all
-python3 scripts/make_yaml_sheet.py -o KPI_result.xlsx
+python3 scripts/report.py   --all
 ```
 
-Watch pods deploy in a second terminal — they are torn down within ~20 seconds, so
-log the output rather than trying to read it live:
+Watch pods deploy in a second terminal — they are torn down within ~20 seconds, so log
+the output rather than trying to read it live:
 
 ```bash
 kubectl --context kind-llm-k8s-bench get pods -A -w | tee pod_lifecycle.log
@@ -104,7 +173,7 @@ kubectl --context kind-llm-k8s-bench get pods -A -w | tee pod_lifecycle.log
 
 ---
 
-## The KPI ladder
+## The K1–K6 ladder
 
 | KPI | Question | Decided by | On failure |
 |---|---|---|---|
@@ -115,8 +184,9 @@ kubectl --context kind-llm-k8s-bench get pods -A -w | tee pod_lifecycle.log
 | K5 | Does it do what was asked? | per-scenario intent probe | `MISCONFIGURED`, continue |
 | K6 | Free of serious security faults? | Checkov + Trivy + kube-linter | `MISCONFIGURED` |
 
-**K4 vacuity rule.** Manifests that create no Pods (RBAC-only, for example) have
-nothing for `kubectl wait` to observe. K4 is recorded as `N/A` and treated as a pass.
+**K4 vacuity rule.** Manifests that create no Pods (RBAC-only, for example) have nothing
+for `kubectl wait` to observe. K4 is recorded as `N/A` and treated as a pass. K5 is
+`N/A` where no scenario probe is defined.
 
 **Outcome classes**
 
@@ -146,8 +216,8 @@ The register serves two purposes:
    would be weighted by scanner redundancy rather than by model behaviour.
 
 Findings whose `rule_id` is absent from the register are recorded as `UNMAPPED`. They
-cannot trip K6, so **a gap in the register can let a serious fault pass silently.**
-Check for unmapped findings before any large batch:
+cannot trip K6, so **a gap in the register can let a serious fault pass silently.** Check
+for unmapped findings before any large batch:
 
 ```bash
 python3 -c "
@@ -160,53 +230,64 @@ for f in glob.glob('results/*.json'):
 
 ---
 
+## Harness validation (mutation testing)
+
+Before trusting the ladder, `scripts/mutation_test.py` seeds six controlled faults into a
+known-clean manifest and checks that each is caught at the rung the design predicts
+(five defects M-01…M-05, plus M-06 which adds full hardening and must reach `CLEAN`).
+Its outputs live under `runs/…_MUT-M-0x`. Run it standalone:
+
+```bash
+python3 scripts/mutation_test.py
+```
+
+Nothing imports this script — it is a validation entry point you run by hand, and it
+underpins the thesis's Harness Validation section, so keep it in the repo.
+
+---
+
 ## Project structure
 
 ```
 .
-├── run_pilot.sh              single-cell pilot runner
+├── run_pilot.sh              single-cell pilot runner → KPI_result.xlsx
 ├── severity_register.csv     rule_id → canonical fault + severity
-├── prompts/                  scenario definitions, reference examples
+├── report.xlsx               aggregated results workbook (per-manifest grid + summaries)
+├── prompts/                  scenario definitions + assembled prompts
+├── examples/                 reference manifests (hardened / unhardened, per family)
+├── figures/                  charts rendered by report.py
 ├── scripts/
-│   ├── generate.py           calls the model, writes raw response
+│   ├── build_prompts.py      assembles the prompt corpus
+│   ├── generate.py           calls each model, writes the raw response
 │   ├── extract.py            recovers YAML from the response
 │   ├── evaluate.py           K1–K6 ladder, classification, teardown
-│   ├── make_yaml_sheet.py    per-KPI Excel sheet
-│   └── make_workbook.py      multi-run workbook
-├── runs/<id>/                response.txt, generation.json,
-│                             manifest.yaml, extraction.json
+│   ├── report.py             aggregates results → report.xlsx + figures/
+│   ├── analyse.py            aggregate statistics for the research questions
+│   ├── make_yaml_sheet.py    single-cell KPI sheet (used by run_pilot.sh)
+│   ├── mutation_test.py      harness validation (six seeded faults)
+│   └── run_batch.py          orchestrates generate→evaluate across all cells
+├── runs/<id>/                response, generation.json, manifest.yaml, extraction.json
 └── results/<id>.json         K1–K6 verdicts, findings, classification
 ```
 
-Run IDs follow `<scenario>_<condition>_<model>_r<sample>`, e.g. `S01_P0_M1_r1`.
-Each evaluation gets its own namespace, `eval-s01-p0-m1-r1`, deleted at teardown.
+Run IDs follow `<scenario>_<condition>_<model>_r<sample>`, e.g. `S01_P0_M1_r1`. Each
+evaluation gets its own namespace, `eval-s01-p0-m1-r1`, deleted at teardown.
 
 ---
 
-## Scaling to the full study
+## Reproducing from scratch vs. resuming
 
-No structural change is needed — widen the loops and extend the registry.
-
-```
---samples 1  →  --samples 3
-scenario  S01  →  S01 .. S20
-condition P0   →  P0, P1, P2, P4
-model     M1   →  M1, M2, M3          (add to MODELS in generate.py)
-```
-
-**Remove the reset step first.** `run_pilot.sh` contains:
+Generation is non-deterministic (temperature 1.0), so a re-run produces a *new* corpus
+with the same statistical character, not identical manifests. `run_pilot.sh` contains a
+reset step that is correct for repeated single-cell testing but destructive for a batch:
 
 ```bash
 rm -rf runs/* results/*
 ```
 
-That is correct for repeated single-cell testing but destructive for the full batch —
-generation is non-deterministic, so regenerated manifests will not match the originals.
-Use `mkdir -p runs results` in the batch runner instead, and skip cells whose output
-directory already exists so an interrupted run can resume.
-
-Free-tier rate limits apply (roughly 10 requests/minute), so the generator waits
-between calls. A full 720-manifest run takes hours.
+For the full batch, `run_batch.py` instead creates the directories if missing and skips
+cells whose output already exists, so an interrupted run can resume. Provider rate limits
+apply, so the generator waits between calls — a full 720-manifest run takes hours.
 
 ---
 
@@ -214,11 +295,11 @@ between calls. A full 720-manifest run takes hours.
 
 | Symptom | Cause and fix |
 |---|---|
-| `set GEMINI_API_KEY first` | New terminal. Re-export, or add to `~/.bashrc`. |
+| `set <PROVIDER>_API_KEY first` | New terminal. Re-export the provider key, or add it to `~/.bashrc`. |
 | `failed to connect to the docker API` | Docker not running. Start Docker Desktop or `sudo service docker start`. |
 | Node stuck `NotReady` | CNI still starting. Wait ~30 s, or `kubectl wait --for=condition=Ready node --all`. |
 | Cluster reports v1.29 not v1.31 | Created without `--image`. Delete and recreate with the pinned node image. |
-| `KPI_result.xlsx is open in Excel` | Close the workbook. Excel's `~$` lock blocks the write. |
+| `report.xlsx is open in Excel` | Close the workbook. Excel's `~$` lock blocks the write. |
 | `sed: cannot rename ...: Permission denied` | `sed -i` fails on `/mnt/c` Windows drives. Use `sed ... > /tmp/f && cp /tmp/f target`. |
 | Fault names appear as raw rule IDs | `severity_register.csv` key mismatch — the register ID must match exactly what the scanner emits. |
 | Same fault counted several times | Deduplication key must be the canonical fault alone; per-scanner resource names never collide. |
@@ -243,3 +324,12 @@ To see why K6 failed on a specific manifest:
 trivy config --severity HIGH,CRITICAL runs/S01_P0_M1_r1/manifest.yaml
 checkov -f runs/S01_P0_M1_r1/manifest.yaml --compact
 ```
+
+---
+
+## Citation
+
+If you use this benchmark or its data, please cite the thesis:
+
+> A. S. Chauhan, *Security and Deployability of LLM-Generated Kubernetes Manifests: An
+> Empirical Benchmark Study*, MEng thesis, Gisma University of Applied Sciences, 2026.
