@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.yaml: "app:\n  name: my-app\n  version: 1.0.0\ndatabase:\n  host: localhost\n\
+    \  port: 5432\n"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-reader-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-reader
+  template:
+    metadata:
+      labels:
+        app: config-reader
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command:
+        - /bin/sh
+        - -c
+        args:
+        - while true; do cat /etc/config/config.yaml; sleep 10; done
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 10001
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          limits:
+            memory: 256Mi
+            cpu: 500m
+          requests:
+            memory: 128Mi
+            cpu: 100m
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      automountServiceAccountToken: false
