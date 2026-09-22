@@ -1,0 +1,37 @@
+{
+  "generation_id": "S15_P0_M1_r1",
+  "scenario": "S15",
+  "namespace": "eval-s15-p0-m1-r1",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "2 document(s) parsed",
+    "K2": "2 resource(s) valid",
+    "K3": "namespace/limited-namespace created\nresourcequota/limit-resources created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (1 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0040",
+      "title": "resource quota usage",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0040",
+      "severity": "LOW",
+      "scanners": [
+        "trivy"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-30T20:03:41Z"
+}

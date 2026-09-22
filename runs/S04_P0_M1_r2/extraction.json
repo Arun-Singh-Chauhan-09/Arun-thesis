@@ -1,0 +1,16 @@
+{
+  "generation_id": "S04_P0_M1_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "286e00397323e1a9b19aa3a626995c0b0dad75e6c797297a204d4df7c2536e8d",
+  "manifest_bytes": 362,
+  "document_count": 2,
+  "kinds": [
+    "Secret",
+    "Pod"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

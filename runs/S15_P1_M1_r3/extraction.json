@@ -1,0 +1,21 @@
+{
+  "generation_id": "S15_P1_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "a50b7758d23720a96ec1154ece5452079d72465167bac2fd4201bbd4a6e5acb6",
+  "manifest_bytes": 181,
+  "document_count": 2,
+  "kinds": [
+    "Namespace",
+    "ResourceQuota"
+  ],
+  "cluster_scoped_objects": [
+    {
+      "kind": "Namespace",
+      "name": "limited-namespace"
+    }
+  ],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

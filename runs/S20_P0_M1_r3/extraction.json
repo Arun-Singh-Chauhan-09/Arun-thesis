@@ -1,0 +1,16 @@
+{
+  "generation_id": "S20_P0_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "e9e642b12886c80f4bab623c3b2cc5efc3633e919117dac0df7c81fc95a5398e",
+  "manifest_bytes": 510,
+  "document_count": 2,
+  "kinds": [
+    "Deployment",
+    "Service"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

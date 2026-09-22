@@ -1,0 +1,40 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+spec:
+  containers:
+  - name: app
+    image: nginx:latest
+  tolerations:
+  - key: dedicated
+    value: batch
+    effect: NoSchedule
+  nodeSelector:
+    disktype: ssd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-deployment
+  template:
+    metadata:
+      labels:
+        app: app-deployment
+    spec:
+      containers:
+      - name: app
+        image: nginx:latest
+      tolerations:
+      - key: dedicated
+        value: batch
+        effect: NoSchedule
+      nodeSelector:
+        disktype: ssd
+```

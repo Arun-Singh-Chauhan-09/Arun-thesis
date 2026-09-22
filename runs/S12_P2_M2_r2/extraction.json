@@ -1,0 +1,15 @@
+{
+  "generation_id": "S12_P2_M2_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "10f27e351ed6faa2e7ffc8579b0909721524af0d3e9743e76d777a3174dfb75c",
+  "manifest_bytes": 757,
+  "document_count": 1,
+  "kinds": [
+    "Deployment"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

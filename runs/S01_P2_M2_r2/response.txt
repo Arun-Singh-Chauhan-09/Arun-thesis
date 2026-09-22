@@ -1,0 +1,32 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stateless-web-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: stateless-web-app
+  template:
+    metadata:
+      labels:
+        app: stateless-web-app
+    spec:
+      containers:
+      - name: web-app
+        image: nginx:1.25
+        ports:
+        - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stateless-web-app
+spec:
+  selector:
+    app: stateless-web-app
+  ports:
+  - port: 80
+    targetPort: 80
+```

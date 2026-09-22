@@ -1,0 +1,160 @@
+{
+  "generation_id": "S16_P3_M3_r2",
+  "scenario": "S16",
+  "namespace": "eval-s16-p3-m3-r2",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": false,
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "3 document(s) parsed",
+    "K2": "3 resource(s) valid",
+    "K3": "service/hardened-db created\nstatefulset.apps/hardened-db created\ndeployment.apps/hardened-app created",
+    "K4": "not ready in 180s: hardened-app-b4bfb95c-vcxz9=Pending hardened-app-b4bfb95c-wgb9q=Pending hardened-db-0=Running",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (11 total findings)"
+  },
+  "classification": "MISCONFIGURED",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Service.default.hardened-db",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_9",
+      "title": "Readiness Probe Should be Configured",
+      "resource": "StatefulSet.default.hardened-db",
+      "canonical_fault": "no_readiness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_40",
+      "title": "Containers should run as a high UID to avoid host conflict",
+      "resource": "StatefulSet.default.hardened-db",
+      "canonical_fault": "run_as_low_uid",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "StatefulSet.default.hardened-db",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_8",
+      "title": "Liveness Probe Should be Configured",
+      "resource": "StatefulSet.default.hardened-db",
+      "canonical_fault": "no_liveness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_15",
+      "title": "Image Pull Policy should be Always",
+      "resource": "Deployment.default.hardened-app",
+      "canonical_fault": "image_pull_policy_always",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV2_K8S_6",
+      "title": "Minimize the admission of pods which lack an associated NetworkPolicy",
+      "resource": "Pod.default.hardened-db.app-hardened-db",
+      "canonical_fault": "no_network_policy",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0021",
+      "title": "Runs with GID <= 10000",
+      "resource": "manifest.yaml",
+      "canonical_fault": "run_as_low_gid",
+      "severity": "LOW",
+      "scanners": [
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0110",
+      "title": "Workloads in the default namespace",
+      "resource": "manifest.yaml",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0125",
+      "title": "Restrict container images to trusted registries",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0125",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "no-anti-affinity",
+      "title": "object has 2 replicas but does not specify inter pod anti-affinity",
+      "resource": "Deployment/hardened-app",
+      "canonical_fault": "no_pod_anti_affinity",
+      "severity": "LOW",
+      "scanners": [
+        "kube-linter"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-09-07T21:55:07Z"
+}

@@ -1,0 +1,39 @@
+{
+  "generation_id": "S02_P1_M2_r3",
+  "scenario": "S02",
+  "namespace": "eval-s02-p1-m2-r3",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "3 document(s) parsed",
+    "K2": "3 resource(s) valid",
+    "K3": "serviceaccount/pod-reader-sa created\nrole.rbac.authorization.k8s.io/pod-reader-role created\nrolebinding.rbac.authorization.k8s.io/pod-reader-rolebinding created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (1 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "ServiceAccount.default.pod-reader-sa",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "checkov"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-23T18:03:46Z"
+}

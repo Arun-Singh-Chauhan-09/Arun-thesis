@@ -1,0 +1,35 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+type: Opaque
+stringData:
+  password: "S3cureP@ssw0rd"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-reader
+  template:
+    metadata:
+      labels:
+        app: app-reader
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: password
+        ports:
+        - containerPort: 80
+```

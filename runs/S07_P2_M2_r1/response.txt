@@ -1,0 +1,28 @@
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: migration
+        image: postgres:16
+        command: ["sh", "-c", "psql $DATABASE_URL -f /migrations/001_initial.sql"]
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: url
+        volumeMounts:
+        - name: migrations
+          mountPath: /migrations
+      volumes:
+      - name: migrations
+        configMap:
+          name: migration-scripts
+```

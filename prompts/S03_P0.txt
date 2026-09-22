@@ -1,0 +1,11 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+TASK:
+Deploy an application that reads its configuration from a ConfigMap mounted as a volume.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

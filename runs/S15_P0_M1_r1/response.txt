@@ -1,0 +1,15 @@
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: limited-namespace
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: limit-resources
+spec:
+  hard:
+    cpu: "4"
+    memory: 8Gi
+```

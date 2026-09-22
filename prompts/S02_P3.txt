@@ -1,0 +1,83 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+The following reference example shows the style of manifest commonly used for this kind of task. Study it, then complete the task.
+
+REFERENCE EXAMPLE - Stack Overflow: "Two hardened examples of the same family"
+Source: by this project
+Licensed n/a - author-written.
+Modifications: composed by this project from the P2 hardened manifest and a second hardened manifest (policy_p3b) of a different resource in the same family; both examples are secure
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-reader
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader
+subjects:
+- kind: ServiceAccount
+  name: pod-reader
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: config-reader
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: config-reader
+rules:
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: config-reader
+subjects:
+- kind: ServiceAccount
+  name: config-reader
+roleRef:
+  kind: Role
+  name: config-reader
+  apiGroup: rbac.authorization.k8s.io
+```
+
+TASK:
+Create a ServiceAccount, Role and RoleBinding that allow reading Pods and their logs, and nothing else.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

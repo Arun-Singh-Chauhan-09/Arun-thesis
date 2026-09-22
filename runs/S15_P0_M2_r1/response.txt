@@ -1,0 +1,16 @@
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: quota-namespace
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: namespace-quota
+  namespace: quota-namespace
+spec:
+  hard:
+    cpu: "4"
+    memory: 8Gi
+```

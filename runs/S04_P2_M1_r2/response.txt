@@ -1,0 +1,44 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+type: Opaque
+data:
+  DB_PASSWORD: <base64 encoded password>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-app
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      containers:
+      - name: app
+        image: <your image name>
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: DB_PASSWORD
+```
+Replace `<base64 encoded password>` with your base64 encoded password and `<your image name>` with your actual image name. 
+
+To base64 encode your password you can use the following command: `echo -n 'your_password' | base64`. 
+
+For example if your password is "mysecretpassword" the command would be `echo -n 'mysecretpassword' | base64` which outputs `bXlzZWNyZXQwcGFzc3dvcmQK`. 
+
+You would replace `<base64 encoded password>` with `bXlzZWNyZXQwcGFzc3dvcmQK`. 
+
+Replace `<your image name>` with the actual name of your Docker image. 
+
+Note: This is just a template. You need to adjust the values according to your needs.

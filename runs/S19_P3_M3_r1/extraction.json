@@ -1,0 +1,15 @@
+{
+  "generation_id": "S19_P3_M3_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "b2725bb74cf74c428464d2f3a5838bff7626d7f0ddea453ee9f56d01379beae1",
+  "manifest_bytes": 1391,
+  "document_count": 1,
+  "kinds": [
+    "Deployment"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

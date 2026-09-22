@@ -1,0 +1,11 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+TASK:
+Create a CronJob that runs a backup container every night at 02:00 and does not keep more than three completed jobs.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

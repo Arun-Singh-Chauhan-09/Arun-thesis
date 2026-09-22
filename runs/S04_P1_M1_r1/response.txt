@@ -1,0 +1,33 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+type: Opaque
+data:
+  password: <base64 encoded password>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  selector:
+    matchLabels:
+      app: app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: app-image
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: password
+```

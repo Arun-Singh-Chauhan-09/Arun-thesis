@@ -1,0 +1,268 @@
+{
+  "generation_id": "S07_P1_M3_r1",
+  "scenario": "S07",
+  "namespace": "eval-s07-p1-m3-r1",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": false,
+    "K5": "N/A",
+    "K6": false
+  },
+  "detail": {
+    "K1": "1 document(s) parsed",
+    "K2": "1 resource(s) valid",
+    "K3": "job.batch/db-migration created",
+    "K4": "not ready in 180s: db-migration-j7p54=Succeeded",
+    "K5": "no intent probe defined",
+    "K6": "capabilities_not_dropped [HIGH]; run_as_root [HIGH]; allow_privilege_escalation [HIGH]; no_security_context [HIGH] (+1 more)"
+  },
+  "classification": "MISCONFIGURED",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_31",
+      "title": "Ensure that the seccomp profile is set to docker/default or runtime/default",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "no_seccomp_profile",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_28",
+      "title": "Minimize the admission of containers with the NET_RAW capability",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "capabilities_not_dropped",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_40",
+      "title": "Containers should run as a high UID to avoid host conflict",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "run_as_low_uid",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_23",
+      "title": "Minimize the admission of root containers",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "run_as_root",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_20",
+      "title": "Containers should not run with allowPrivilegeEscalation",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "allow_privilege_escalation",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_22",
+      "title": "Use read-only filesystem for containers where possible",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "writable_root_filesystem",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_10",
+      "title": "CPU requests should be set",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "no_cpu_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_30",
+      "title": "Apply security context to your containers",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "no_security_context",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_11",
+      "title": "CPU limits should be set",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "no_cpu_limit",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_13",
+      "title": "Memory limits should be set",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "no_memory_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_12",
+      "title": "Memory requests should be set",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "no_memory_limit",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_38",
+      "title": "Ensure that Service Account Tokens are only mounted where necessary",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_15",
+      "title": "Image Pull Policy should be Always",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "image_pull_policy_always",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0004",
+      "title": "Default capabilities: some containers do not drop any",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0004",
+      "severity": "LOW",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0021",
+      "title": "Runs with GID <= 10000",
+      "resource": "manifest.yaml",
+      "canonical_fault": "run_as_low_gid",
+      "severity": "LOW",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0118",
+      "title": "Default security context configured",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0118",
+      "severity": "HIGH",
+      "scanners": [
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0125",
+      "title": "Restrict container images to trusted registries",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0125",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "job-ttl-seconds-after-finished",
+      "title": "Standalone Job does not specify ttlSecondsAfterFinished",
+      "resource": "Job/db-migration",
+      "canonical_fault": "job-ttl-seconds-after-finished",
+      "severity": "UNMAPPED",
+      "scanners": [
+        "kube-linter"
+      ]
+    }
+  ],
+  "notes": [
+    "1 finding(s) not in severity register"
+  ],
+  "evaluated_at_utc": "2026-08-23T23:26:48Z"
+}

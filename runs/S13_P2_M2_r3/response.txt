@@ -1,0 +1,38 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-limits
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app-with-limits
+  template:
+    metadata:
+      labels:
+        app: app-with-limits
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        ports:
+        - containerPort: 80
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: app-with-limits-pdb
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app: app-with-limits
+```

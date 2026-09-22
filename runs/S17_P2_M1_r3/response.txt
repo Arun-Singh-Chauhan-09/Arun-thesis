@@ -1,0 +1,47 @@
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: stable-service
+spec:
+  clusterIP: None
+  selector:
+    app: stable-app
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stable-app
+spec:
+  replicas: 3
+  serviceName: stable-service
+  selector:
+    matchLabels:
+      app: stable-app
+  template:
+    metadata:
+      labels:
+        app: stable-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+```

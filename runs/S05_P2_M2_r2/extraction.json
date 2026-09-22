@@ -1,0 +1,16 @@
+{
+  "generation_id": "S05_P2_M2_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "9d34fba53bbc3b0a1eea91dded147f16ab009eba4bbe9bb0aa72a6ec7c3e5747",
+  "manifest_bytes": 764,
+  "document_count": 2,
+  "kinds": [
+    "PersistentVolumeClaim",
+    "StatefulSet"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

@@ -1,0 +1,18 @@
+{
+  "generation_id": "S07_P2_M1_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "ae261760bc01906cdc5834e3d7ee2df63d64cd5ba9236135d7443d9bc8e3b143",
+  "manifest_bytes": 2039,
+  "document_count": 4,
+  "kinds": [
+    "Job",
+    "ConfigMap",
+    "Service",
+    "Pod"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

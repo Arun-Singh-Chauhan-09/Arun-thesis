@@ -1,0 +1,35 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  app.properties: |
+    key1=value1
+    key2=value2
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-app
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.14.2
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```

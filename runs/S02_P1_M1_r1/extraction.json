@@ -1,0 +1,16 @@
+{
+  "generation_id": "S02_P1_M1_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "16d007e072c4ae3ca7755bf8659e90d5e91fc6b33571bfc2dd2fab691c813b95",
+  "manifest_bytes": 489,
+  "document_count": 3,
+  "kinds": [
+    "Role",
+    "RoleBinding"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

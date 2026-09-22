@@ -1,0 +1,49 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+type: Opaque
+data:
+  password: <base64 encoded password>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-app
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      containers:
+      - name: app
+        image: postgres
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: password
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-app-test
+spec:
+  containers:
+  - name: test
+    image: postgres
+    env:
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-password
+          key: password
+    command: ["echo", "$DB_PASSWORD"]
+```

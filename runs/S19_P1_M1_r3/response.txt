@@ -1,0 +1,42 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssd-deployment
+spec:
+  selector:
+    matchLabels:
+      app: ssd-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: ssd-app
+    spec:
+      containers:
+      - name: ssd-app
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+      - key: dedicated
+        value: batch
+        operator: Equal
+        effect: NoSchedule
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: taint-pod
+spec:
+  containers:
+  - name: taint-container
+    image: nginx:1.14.2
+  tolerations:
+  - key: dedicated
+    value: batch
+    operator: Equal
+    effect: NoSchedule
+```

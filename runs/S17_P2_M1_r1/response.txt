@@ -1,0 +1,46 @@
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: stable-service
+spec:
+  selector:
+    app: stable-app
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: stable-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: stable-app
+  template:
+    metadata:
+      labels:
+        app: stable-app
+    spec:
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: www
+          mountPath: /usr/share/nginx/html
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+```

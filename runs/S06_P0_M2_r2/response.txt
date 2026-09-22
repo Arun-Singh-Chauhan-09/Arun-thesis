@@ -1,0 +1,19 @@
+```yaml
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup-cronjob
+spec:
+  schedule: "0 2 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: backup
+            image: backup:latest
+            command: ["/bin/sh", "-c", "echo 'Backup started'; sleep 10; echo 'Backup completed'"]
+```

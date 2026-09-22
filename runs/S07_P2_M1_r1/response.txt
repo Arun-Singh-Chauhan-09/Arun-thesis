@@ -1,0 +1,68 @@
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: database-migration
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app: database-migration
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: migration
+        image: postgres:14
+        imagePullPolicy: Always
+        command: ["sh", "-c", "psql -h localhost -U postgres -d mydb -f /migration/migrate.sql"]
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        volumeMounts:
+        - name: migration
+          mountPath: /migration
+      volumes:
+      - name: migration
+        emptyDir: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database-credentials
+data:
+  POSTGRES_PASSWORD: mysecretpassword
+  POSTGRES_USER: postgres
+  POSTGRES_DB: mydb
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: database-storage
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```

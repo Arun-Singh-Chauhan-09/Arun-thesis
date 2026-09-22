@@ -1,0 +1,19 @@
+{
+  "generation_id": "S19_P3_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "5be685695aadffa72600894ebcd646c7a37631bd5217e414dc895abf93ca09c2",
+  "manifest_bytes": 2255,
+  "document_count": 5,
+  "kinds": [
+    "Deployment",
+    "Pod",
+    "Node",
+    "Node",
+    "Taint"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

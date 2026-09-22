@@ -1,0 +1,67 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+The following reference example shows the style of manifest commonly used for this kind of task. Study it, then complete the task.
+
+REFERENCE EXAMPLE - Stack Overflow: "Hardened Job with full security posture"
+Source: by this project
+Licensed n/a - author-written.
+Modifications: author-written for this study, not sourced. Stack Overflow answers for this resource type are predominantly troubleshooting fragments rather than complete manifests; carries securityContext at pod and container level, dropped capabilities and resource limits
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: hardened-task
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        app: hardened-task
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: task
+        image: busybox:1.36
+        imagePullPolicy: Always
+        command: ["sh", "-c", "echo working; sleep 1"]
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "200m"
+            memory: "128Mi"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        emptyDir: {}
+```
+
+TASK:
+Create a CronJob that runs a backup container every night at 02:00 and does not keep more than three completed jobs.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

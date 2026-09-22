@@ -1,0 +1,36 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-with-log-sidecar
+  labels:
+    app: log-sidecar-demo
+spec:
+  volumes:
+    - name: shared-logs
+      emptyDir: {}
+  containers:
+    - name: main-app
+      image: busybox:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - >
+          i=0;
+          while true; do
+            echo "$(date '+%Y-%m-%d %H:%M:%S') - log entry $i" >> /var/log/app/app.log;
+            i=$((i+1));
+            sleep 5;
+          done
+      volumeMounts:
+        - name: shared-logs
+          mountPath: /var/log/app
+
+    - name: log-sidecar
+      image: busybox:latest
+      command: ["/bin/sh", "-c"]
+      args:
+        - tail -n+1 -F /var/log/app/app.log
+      volumeMounts:
+        - name: shared-logs
+          mountPath: /var/log/app
+```

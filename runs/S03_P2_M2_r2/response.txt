@@ -1,0 +1,48 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  app.properties: |
+    database.url=jdbc:mysql://db.example.com:3306/appdb
+    database.username=appuser
+    database.password=secret
+    log.level=INFO
+    feature.flags.enabled=true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-app
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+          readOnly: true
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```

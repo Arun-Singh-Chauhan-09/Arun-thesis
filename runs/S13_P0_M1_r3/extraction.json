@@ -1,0 +1,16 @@
+{
+  "generation_id": "S13_P0_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "b0787b4e07c839fe2f666d0f615b0ead25cd33c43ae22fc167740e34fa2a8fdc",
+  "manifest_bytes": 604,
+  "document_count": 2,
+  "kinds": [
+    "Deployment",
+    "PodDisruptionBudget"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

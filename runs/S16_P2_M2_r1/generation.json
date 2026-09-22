@@ -1,0 +1,18 @@
+{
+  "generation_id": "S16_P2_M2_r1",
+  "scenario": "S16",
+  "condition": "P2",
+  "model_label": "M2",
+  "model_id": "deepseek-chat",
+  "provider_base_url": "https://api.deepseek.com/v1",
+  "sample": 1,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "max_tokens": 4096,
+  "finish_reason": "stop",
+  "prompt_tokens": 549,
+  "completion_tokens": 449,
+  "elapsed_seconds": 3.77,
+  "response_sha256": "e9c827d8668fba3b8d679e8b73651e60688b23a0ccaa7d62a70c39ba731a6ed8",
+  "generated_at_utc": "2026-08-23T20:28:37Z"
+}

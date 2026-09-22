@@ -1,0 +1,16 @@
+{
+  "generation_id": "S11_P3_M2_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "51f3e7401e935106db0c3f798423bfca66034a24fb3ed363cf26693a1f1f00e7",
+  "manifest_bytes": 756,
+  "document_count": 2,
+  "kinds": [
+    "Deployment",
+    "HorizontalPodAutoscaler"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

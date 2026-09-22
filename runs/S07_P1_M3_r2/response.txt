@@ -1,0 +1,21 @@
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      containers:
+      - name: db-migration
+        image: migrate/migrate:v4.17.0
+        command:
+        - migrate
+        - -path
+        - /migrations
+        - -database
+        - "postgres://user:password@db:5432/mydb?sslmode=disable"
+        - up
+      restartPolicy: Never
+```

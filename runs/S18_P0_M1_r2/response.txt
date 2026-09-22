@@ -1,0 +1,46 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spread-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: spread-app
+  template:
+    metadata:
+      labels:
+        app: spread-app
+    spec:
+      containers:
+      - name: app-container
+        image: busybox
+        command: ["sleep", "9999"]
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app: spread-app
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spread-pod
+spec:
+  containers:
+  - name: app-container
+    image: busybox
+    command: ["sleep", "9999"]
+  labels:
+    app: spread-app
+  topologySpreadConstraints:
+  - maxSkew: 1
+    topologyKey: kubernetes.io/hostname
+    whenUnsatisfiable: DoNotSchedule
+    labelSelector:
+      matchLabels:
+        app: spread-app
+```

@@ -1,0 +1,39 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+The following reference example shows the style of manifest commonly used for this kind of task. Study it, then complete the task.
+
+REFERENCE EXAMPLE - Stack Overflow: "Run a Stateless Application Using a Deployment"
+Source: by Kubernetes Authors, https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/
+Licensed CC BY 4.0.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```
+
+TASK:
+Deploy a web application behind a Service of type NodePort, serving on container port 8080 and exposed on port 80.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

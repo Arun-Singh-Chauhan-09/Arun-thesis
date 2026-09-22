@@ -1,0 +1,32 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-tailer-pod
+spec:
+  containers:
+  - name: main-app
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      while true; do
+        echo "$(date) - log entry" >> /var/log/application.log
+        sleep 5
+      done
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log
+  - name: sidecar
+    image: busybox
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      tail -f /var/log/application.log
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
+```

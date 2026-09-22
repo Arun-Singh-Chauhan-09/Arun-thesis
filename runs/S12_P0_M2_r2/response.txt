@@ -1,0 +1,31 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-with-probes
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-with-probes
+  template:
+    metadata:
+      labels:
+        app: app-with-probes
+    spec:
+      containers:
+      - name: app
+        image: nginx:latest
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 5
+```

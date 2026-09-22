@@ -1,0 +1,15 @@
+{
+  "generation_id": "S08_P0_M4_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "3a036afec7f3f78cbffc36a5c85b989fcf436d228a6ad69d4d696d97dc4fb400",
+  "manifest_bytes": 424,
+  "document_count": 1,
+  "kinds": [
+    "Ingress"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

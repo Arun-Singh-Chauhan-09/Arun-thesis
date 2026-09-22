@@ -1,0 +1,23 @@
+{
+  "generation_id": "S14_P1_M1_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "51cdfc73c83190426d9e827a03bfefd883370a0c52808f1af1045a391af42acb",
+  "manifest_bytes": 1616,
+  "document_count": 4,
+  "kinds": [
+    "Pod",
+    "PersistentVolume",
+    "PersistentVolumeClaim",
+    "Pod"
+  ],
+  "cluster_scoped_objects": [
+    {
+      "kind": "PersistentVolume",
+      "name": "log-pv"
+    }
+  ],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

@@ -1,0 +1,25 @@
+{
+  "generation_id": "S09_P1_M3_r3",
+  "scenario": "S09",
+  "namespace": "eval-s09-p1-m3-r3",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "1 document(s) parsed",
+    "K2": "1 resource(s) valid",
+    "K3": "networkpolicy.networking.k8s.io/api-allow-frontend created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (0 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-24T00:01:34Z"
+}

@@ -1,0 +1,74 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+The following reference example shows the style of manifest commonly used for this kind of task. Study it, then complete the task.
+
+REFERENCE EXAMPLE - Stack Overflow: "Configure a Security Context for a Pod or Container"
+Source: by Kubernetes Authors, https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+Licensed CC BY 4.0.
+Modifications: composite - securityContext fields drawn from the Pod examples on this page and assembled into a Deployment; resource limits and emptyDir volumes added so readOnlyRootFilesystem does not break nginx
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hardened-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hardened-app
+  template:
+    metadata:
+      labels:
+        app: hardened-app
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: cache
+          mountPath: /var/cache/nginx
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: cache
+        emptyDir: {}
+```
+
+TASK:
+Deploy a stateless web application with two replicas, reachable inside the cluster on port 80.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

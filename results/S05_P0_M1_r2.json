@@ -1,0 +1,25 @@
+{
+  "generation_id": "S05_P0_M1_r2",
+  "scenario": "S05",
+  "namespace": "eval-s05-p0-m1-r2",
+  "verdict": {
+    "K1": true,
+    "K2": false,
+    "K3": null,
+    "K4": null,
+    "K5": null,
+    "K6": null
+  },
+  "detail": {
+    "K1": "2 document(s) parsed",
+    "K2": "StatefulSet: problem validating schema. Check JSON formatting: jsonschema validation failed with 'https://raw.githubusercontent.com/y",
+    "K3": "not attempted - INVALID at K1/K2",
+    "K4": "not attempted - INVALID at K1/K2",
+    "K5": "not attempted - INVALID at K1/K2",
+    "K6": "not attempted - INVALID at K1/K2"
+  },
+  "classification": "INVALID",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-30T18:06:16Z"
+}

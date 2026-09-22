@@ -1,0 +1,15 @@
+{
+  "generation_id": "S10_P2_M2_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "ee52b7d1b4aeb125cb59eb7f62ce8b3b063c0182b05118aac954732a0c89c9c9",
+  "manifest_bytes": 1481,
+  "document_count": 1,
+  "kinds": [
+    "DaemonSet"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

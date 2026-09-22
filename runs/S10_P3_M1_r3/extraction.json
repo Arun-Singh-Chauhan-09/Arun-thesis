@@ -1,0 +1,13 @@
+{
+  "generation_id": "S10_P3_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "f784c878a73a497433a81d164ad1232c4cddecb7575ffd1693c4027fde1b127f",
+  "manifest_bytes": 1566,
+  "document_count": 0,
+  "kinds": [],
+  "cluster_scoped_objects": [],
+  "parses": false,
+  "parse_error": "while parsing a block mapping\n  in \"<unicode string>\", line 53, column 1:\n    apiVersion: rbac.authorization.k ... \n    ^\nexpected <block end>, but found '<block mapping start>'\n  in \"<unicode string>\", line 60, column 2:\n     subjects:\n     ^",
+  "repaired": false
+}

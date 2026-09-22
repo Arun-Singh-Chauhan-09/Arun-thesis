@@ -1,0 +1,35 @@
+```yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: headless-service
+spec:
+  clusterIP: None
+  selector:
+    app: statefulset
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: statefulset
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: statefulset
+  serviceName: headless-service
+  template:
+    metadata:
+      labels:
+        app: statefulset
+    spec:
+      containers:
+      - name: container
+        image: nginx
+        ports:
+        - containerPort: 80
+```

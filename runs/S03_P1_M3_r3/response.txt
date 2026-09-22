@@ -1,0 +1,44 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.yaml: |
+    environment: production
+    logLevel: info
+    featureFlags:
+      enableCache: true
+      enableMetrics: true
+  app.properties: |
+    server.port=8080
+    server.timeout=30s
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-reader-app
+spec:
+  selector:
+    matchLabels:
+      app: config-reader-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: config-reader-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```

@@ -1,0 +1,18 @@
+{
+  "generation_id": "S07_P2_M1_r3",
+  "scenario": "S07",
+  "condition": "P2",
+  "model_label": "M1",
+  "model_id": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+  "provider_base_url": "https://api.together.xyz/v1",
+  "sample": 3,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "max_tokens": 4096,
+  "finish_reason": "stop",
+  "prompt_tokens": 515,
+  "completion_tokens": 441,
+  "elapsed_seconds": 3.3,
+  "response_sha256": "e6bc682f095b868c38bc469f943fd9eddcdce8cfe8fa4614bb1b1c28ed0e152e",
+  "generated_at_utc": "2026-08-30T18:36:09Z"
+}

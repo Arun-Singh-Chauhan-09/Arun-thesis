@@ -1,0 +1,15 @@
+```yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-namespace
+---
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: my-quota
+spec:
+  hard:
+    cpu: "4"
+    memory: 8Gi
+```

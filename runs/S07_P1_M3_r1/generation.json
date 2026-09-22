@@ -1,0 +1,18 @@
+{
+  "generation_id": "S07_P1_M3_r1",
+  "scenario": "S07",
+  "condition": "P1",
+  "model_label": "M3",
+  "model_id": "claude-sonnet-5",
+  "provider_base_url": "https://api.anthropic.com/v1/",
+  "sample": 1,
+  "temperature": 1.0,
+  "top_p": "not supported by this model",
+  "max_tokens": 4096,
+  "finish_reason": "stop",
+  "prompt_tokens": 515,
+  "completion_tokens": 139,
+  "elapsed_seconds": 2.62,
+  "response_sha256": "f0db7e7dc189c87f8f3f93bafad785b2587ced1300e8cf2f90218c581959e897",
+  "generated_at_utc": "2026-08-23T23:23:39Z"
+}

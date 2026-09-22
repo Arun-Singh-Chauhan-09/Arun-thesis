@@ -1,0 +1,23 @@
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+spec:
+  backoffLimit: 2
+  completions: 1
+  parallelism: 1
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: migration
+        image: my-db-migration-image:latest
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            echo "Running database migration..."
+            # Replace with actual migration command (e.g., migrate -path=/migrations up)
+            # For demonstration, exit 0 for success. For testing failures, exit 1.
+            exit 0
+```

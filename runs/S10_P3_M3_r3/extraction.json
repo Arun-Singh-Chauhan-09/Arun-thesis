@@ -1,0 +1,28 @@
+{
+  "generation_id": "S10_P3_M3_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "927ceeece24f5bfee530e39d4a2c0018b430a648fda6f5eb575fd80b90c9ed60",
+  "manifest_bytes": 2922,
+  "document_count": 5,
+  "kinds": [
+    "ServiceAccount",
+    "ClusterRole",
+    "ClusterRoleBinding",
+    "DaemonSet",
+    "ConfigMap"
+  ],
+  "cluster_scoped_objects": [
+    {
+      "kind": "ClusterRole",
+      "name": "log-agent-reader"
+    },
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "log-agent-reader-binding"
+    }
+  ],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

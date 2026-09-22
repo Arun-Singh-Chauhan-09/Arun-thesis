@@ -1,0 +1,48 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.yaml: |
+    app:
+      name: my-application
+      environment: production
+      log_level: info
+    settings:
+      max_connections: 100
+      timeout: 30
+  app.properties: |
+    server.port=8080
+    server.host=0.0.0.0
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-reader-app
+  labels:
+    app: config-reader-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: config-reader-app
+  template:
+    metadata:
+      labels:
+        app: config-reader-app
+    spec:
+      containers:
+        - name: app
+          image: nginx:1.25
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/config
+              readOnly: true
+      volumes:
+        - name: config-volume
+          configMap:
+            name: app-config
+```

@@ -1,0 +1,303 @@
+{
+  "generation_id": "S20_P0_M3_r2",
+  "scenario": "S20",
+  "namespace": "eval-s20-p0-m3-r2",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": true,
+    "K5": "N/A",
+    "K6": false
+  },
+  "detail": {
+    "K1": "2 document(s) parsed",
+    "K2": "2 resource(s) valid",
+    "K3": "deployment.apps/webapp-deployment created\nservice/webapp-service created",
+    "K4": "all pods ready within 180s",
+    "K5": "no intent probe defined",
+    "K6": "capabilities_not_dropped [HIGH]; run_as_root [HIGH]; allow_privilege_escalation [HIGH]; no_security_context [HIGH] (+1 more)"
+  },
+  "classification": "MISCONFIGURED",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_31",
+      "title": "Ensure that the seccomp profile is set to docker/default or runtime/default",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_seccomp_profile",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_28",
+      "title": "Minimize the admission of containers with the NET_RAW capability",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "capabilities_not_dropped",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_9",
+      "title": "Readiness Probe Should be Configured",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_readiness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_40",
+      "title": "Containers should run as a high UID to avoid host conflict",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "run_as_low_uid",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_23",
+      "title": "Minimize the admission of root containers",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "run_as_root",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_20",
+      "title": "Containers should not run with allowPrivilegeEscalation",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "allow_privilege_escalation",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_22",
+      "title": "Use read-only filesystem for containers where possible",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "writable_root_filesystem",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_10",
+      "title": "CPU requests should be set",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_cpu_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_30",
+      "title": "Apply security context to your containers",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_security_context",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_11",
+      "title": "CPU limits should be set",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_cpu_limit",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_13",
+      "title": "Memory limits should be set",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_memory_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_12",
+      "title": "Memory requests should be set",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_memory_limit",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_14",
+      "title": "Image Tag should be fixed - not latest or blank",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "image_tag_not_fixed",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_38",
+      "title": "Ensure that Service Account Tokens are only mounted where necessary",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_8",
+      "title": "Liveness Probe Should be Configured",
+      "resource": "Deployment.default.webapp-deployment",
+      "canonical_fault": "no_liveness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV2_K8S_6",
+      "title": "Minimize the admission of pods which lack an associated NetworkPolicy",
+      "resource": "Pod.default.webapp-deployment.app-webapp",
+      "canonical_fault": "no_network_policy",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0004",
+      "title": "Default capabilities: some containers do not drop any",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0004",
+      "severity": "LOW",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0013",
+      "title": "Image tag \":latest\" used",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0013",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0021",
+      "title": "Runs with GID <= 10000",
+      "resource": "manifest.yaml",
+      "canonical_fault": "run_as_low_gid",
+      "severity": "LOW",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0118",
+      "title": "Default security context configured",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0118",
+      "severity": "HIGH",
+      "scanners": [
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "no-anti-affinity",
+      "title": "object has 3 replicas but does not specify inter pod anti-affinity",
+      "resource": "Deployment/webapp-deployment",
+      "canonical_fault": "no-anti-affinity",
+      "severity": "UNMAPPED",
+      "scanners": [
+        "kube-linter"
+      ]
+    }
+  ],
+  "notes": [
+    "1 finding(s) not in severity register"
+  ],
+  "evaluated_at_utc": "2026-08-24T02:51:28Z"
+}

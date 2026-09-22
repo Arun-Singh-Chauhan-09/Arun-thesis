@@ -1,0 +1,17 @@
+{
+  "generation_id": "S05_P0_M1_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "ff35c5db686e8f44ef732c86e6d2d34ea2d09592cb3ee69bbb9db0584bf85205",
+  "manifest_bytes": 930,
+  "document_count": 3,
+  "kinds": [
+    "PersistentVolumeClaim",
+    "Service",
+    "StatefulSet"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

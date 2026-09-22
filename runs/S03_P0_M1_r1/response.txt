@@ -1,0 +1,54 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  DB_HOST: localhost
+  DB_PORT: "5432"
+  DB_USER: user
+  DB_PASSWORD: pass
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-pod
+spec:
+  containers:
+  - name: app-container
+    image: busybox
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+    command: ["sleep", "1000"]
+  volumes:
+  - name: config-volume
+    configMap:
+      name: app-config
+---
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app-container
+        image: busybox
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+        command: ["sleep", "1000"]
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```

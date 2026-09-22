@@ -1,0 +1,16 @@
+{
+  "generation_id": "S10_P3_M2_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "99681aa98c0e1765153e34d8393d2d3f156a23e538e4c81713f1f4b6d3eba7b8",
+  "manifest_bytes": 1927,
+  "document_count": 2,
+  "kinds": [
+    "DaemonSet",
+    "ConfigMap"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

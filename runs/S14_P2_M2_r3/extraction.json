@@ -1,0 +1,15 @@
+{
+  "generation_id": "S14_P2_M2_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "4c12ae1d90704cdc302dd994d1a4fee6042c467e336aa833143d80ff533c1ae4",
+  "manifest_bytes": 620,
+  "document_count": 1,
+  "kinds": [
+    "Pod"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

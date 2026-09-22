@@ -1,0 +1,27 @@
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-log-reader-sa
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-log-reader-role
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-log-reader-binding
+subjects:
+- kind: ServiceAccount
+  name: pod-log-reader-sa
+roleRef:
+  kind: Role
+  name: pod-log-reader-role
+  apiGroup: rbac.authorization.k8s.io
+```

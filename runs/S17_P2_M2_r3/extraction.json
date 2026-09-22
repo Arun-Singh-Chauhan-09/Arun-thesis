@@ -1,0 +1,16 @@
+{
+  "generation_id": "S17_P2_M2_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "4dd5c70df24cdb9e22c3f1e4e225e1dbfb7ddcd92c11a1f454513d7fd182f712",
+  "manifest_bytes": 530,
+  "document_count": 2,
+  "kinds": [
+    "Service",
+    "StatefulSet"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

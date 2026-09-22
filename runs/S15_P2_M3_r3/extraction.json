@@ -1,0 +1,21 @@
+{
+  "generation_id": "S15_P2_M4_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "6a259a2bd6a34df48eebd37fcff9949b48e8e36d407d02678fbe714394c1d94d",
+  "manifest_bytes": 294,
+  "document_count": 2,
+  "kinds": [
+    "Namespace",
+    "ResourceQuota"
+  ],
+  "cluster_scoped_objects": [
+    {
+      "kind": "Namespace",
+      "name": "quota-limited-namespace"
+    }
+  ],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

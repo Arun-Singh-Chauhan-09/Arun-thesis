@@ -1,0 +1,17 @@
+{
+  "generation_id": "S10_P2_M1_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "ec1887649a58da63cdad7f5d47aa85805a36da3f59a2dcd716b371cf9f69f0a1",
+  "manifest_bytes": 1212,
+  "document_count": 3,
+  "kinds": [
+    "DaemonSet",
+    "ConfigMap",
+    "PodDisruptionBudget"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

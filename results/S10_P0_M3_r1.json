@@ -1,0 +1,25 @@
+{
+  "generation_id": "S10_P0_M3_r1",
+  "scenario": "S10",
+  "namespace": "eval-s10-p0-m3-r1",
+  "verdict": {
+    "K1": true,
+    "K2": false,
+    "K3": null,
+    "K4": null,
+    "K5": null,
+    "K6": null
+  },
+  "detail": {
+    "K1": "4 document(s) parsed",
+    "K2": "DaemonSet: problem validating schema. Check JSON formatting: jsonschema validation failed with 'https://raw.githubusercontent.com/y",
+    "K3": "not attempted - INVALID at K1/K2",
+    "K4": "not attempted - INVALID at K1/K2",
+    "K5": "not attempted - INVALID at K1/K2",
+    "K6": "not attempted - INVALID at K1/K2"
+  },
+  "classification": "INVALID",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-24T00:04:48Z"
+}

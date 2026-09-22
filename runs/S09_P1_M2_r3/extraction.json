@@ -1,0 +1,15 @@
+{
+  "generation_id": "S09_P1_M2_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "f1e5365c666f0de569facc3c16571f5415c354eca5e2d2f0ea066c9cd345beef",
+  "manifest_bytes": 256,
+  "document_count": 1,
+  "kinds": [
+    "NetworkPolicy"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

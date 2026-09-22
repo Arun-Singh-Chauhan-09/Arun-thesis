@@ -1,0 +1,66 @@
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collection-agent
+spec:
+  selector:
+    matchLabels:
+      app: log-collection-agent
+  template:
+    metadata:
+      labels:
+        app: log-collection-agent
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: log-agent
+        image: fluent/fluentd-kubernetes-daemonset:v1-debian-elasticsearch
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log
+        - name: config
+          mountPath: /etc/fluent
+      volumes:
+      - name: logs
+        hostPath:
+          path: /var/log
+      - name: config
+        configMap:
+          name: log-collection-agent-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: log-collection-agent-config
+data:
+  fluent.conf: |
+    <source>
+      @type tail
+      path /var/log/*.log
+      pos_file /var/log/fluentd.pos
+      tag "log.collection"
+    </source>
+    <match log.collection>
+      @type elasticsearch
+      host elasticsearch
+      port 9200
+      index_name log
+    </match>
+```

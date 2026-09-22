@@ -1,0 +1,304 @@
+{
+  "generation_id": "S10_P2_M1_r2",
+  "scenario": "S10",
+  "namespace": "eval-s10-p2-m1-r2",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": false,
+    "K4": null,
+    "K5": null,
+    "K6": false
+  },
+  "detail": {
+    "K1": "3 document(s) parsed",
+    "K2": "3 resource(s) valid",
+    "K3": "The PodDisruptionBudget \"log-collection-agent-budget\" is invalid: spec: Invalid value: policy.PodDisruptionBudgetSpec{MinAvailable:(*intstr.IntOrString)(0xc007d45980), Selector:(*v1.LabelSelector)(0xc007d459a0), MaxUnavailable:(*intstr.IntOrString)(0xc007d45960), UnhealthyPodEvictionPolicy:(*policy.UnhealthyPodEvictionPolicyType)(nil)}: minAvailable and maxUnavailable cannot be both set",
+    "K4": "not attempted - K3 failed",
+    "K5": "not attempted - K3 failed",
+    "K6": "capabilities_not_dropped [HIGH]; run_as_root [HIGH]; allow_privilege_escalation [HIGH]; no_security_context [HIGH]"
+  },
+  "classification": "MISCONFIGURED",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_31",
+      "title": "Ensure that the seccomp profile is set to docker/default or runtime/default",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_seccomp_profile",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_28",
+      "title": "Minimize the admission of containers with the NET_RAW capability",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "capabilities_not_dropped",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_9",
+      "title": "Readiness Probe Should be Configured",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_readiness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_40",
+      "title": "Containers should run as a high UID to avoid host conflict",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "run_as_low_uid",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_23",
+      "title": "Minimize the admission of root containers",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "run_as_root",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_20",
+      "title": "Containers should not run with allowPrivilegeEscalation",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "allow_privilege_escalation",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_22",
+      "title": "Use read-only filesystem for containers where possible",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "writable_root_filesystem",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_10",
+      "title": "CPU requests should be set",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_cpu_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_30",
+      "title": "Apply security context to your containers",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_security_context",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_11",
+      "title": "CPU limits should be set",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_cpu_limit",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_13",
+      "title": "Memory limits should be set",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_memory_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_12",
+      "title": "Memory requests should be set",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_memory_limit",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_38",
+      "title": "Ensure that Service Account Tokens are only mounted where necessary",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_8",
+      "title": "Liveness Probe Should be Configured",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "no_liveness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_15",
+      "title": "Image Pull Policy should be Always",
+      "resource": "DaemonSet.default.log-collection-agent",
+      "canonical_fault": "image_pull_policy_always",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV2_K8S_6",
+      "title": "Minimize the admission of pods which lack an associated NetworkPolicy",
+      "resource": "Pod.default.log-collection-agent.app-log-collection-agent",
+      "canonical_fault": "no_network_policy",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0021",
+      "title": "Runs with GID <= 10000",
+      "resource": "manifest.yaml",
+      "canonical_fault": "run_as_low_gid",
+      "severity": "LOW",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0023",
+      "title": "hostPath volumes mounted",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0023",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0125",
+      "title": "Restrict container images to trusted registries",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0125",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "pdb-min-available",
+      "title": "The current number of replicas for deployment log-collection-agent is equal to or lower than the minimum number of replicas specified by its PDB.",
+      "resource": "PodDisruptionBudget/log-collection-agent-budget",
+      "canonical_fault": "pdb-min-available",
+      "severity": "UNMAPPED",
+      "scanners": [
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "pdb-unhealthy-pod-eviction-policy",
+      "title": "unhealthyPodEvictionPolicy is not explicitly set",
+      "resource": "PodDisruptionBudget/log-collection-agent-budget",
+      "canonical_fault": "pdb-unhealthy-pod-eviction-policy",
+      "severity": "UNMAPPED",
+      "scanners": [
+        "kube-linter"
+      ]
+    }
+  ],
+  "notes": [
+    "2 finding(s) not in severity register"
+  ],
+  "evaluated_at_utc": "2026-08-30T19:05:27Z"
+}

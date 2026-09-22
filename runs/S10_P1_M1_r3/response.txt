@@ -1,0 +1,38 @@
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collection-agent
+spec:
+  selector:
+    matchLabels:
+      app: log-collection-agent
+  template:
+    metadata:
+      labels:
+        app: log-collection-agent
+    spec:
+      containers:
+      - name: log-collection-agent
+        image: log-collection-agent:latest
+---
+apiVersion: rbac.authorization.k!8s.io/v1
+kind: ClusterRole
+metadata:
+  name: log-collection-agent
+rules:
+- apiGroups: [""]
+  resources: ["nodes", "pods", "events"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: log-collection-agent
+roleRef:
+  name: log-collection-agent
+  kind: ClusterRole
+subjects:
+- kind: ServiceAccount
+  name: default
+```

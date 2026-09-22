@@ -1,0 +1,13 @@
+{
+  "generation_id": "S16_P0_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "1709d71e6ce52b83fb2aaaed637916a6f5bbfa511cdc6afac05c06274474603e",
+  "manifest_bytes": 800,
+  "document_count": 0,
+  "kinds": [],
+  "cluster_scoped_objects": [],
+  "parses": false,
+  "parse_error": "while scanning a simple key\n  in \"<unicode string>\", line 42, column 5:\n        -echo \"Database is available\"; s ... \n        ^\ncould not find expected ':'\n  in \"<unicode string>\", line 43, column 3:\n      initContainers:\n      ^",
+  "repaired": false
+}

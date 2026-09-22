@@ -1,0 +1,345 @@
+{
+  "generation_id": "S16_P2_M1_r3",
+  "scenario": "S16",
+  "namespace": "eval-s16-p2-m1-r3",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": false,
+    "K5": "N/A",
+    "K6": false
+  },
+  "detail": {
+    "K1": "3 document(s) parsed",
+    "K2": "3 resource(s) valid",
+    "K3": "service/database created\ndeployment.apps/database created\ndeployment.apps/app created",
+    "K4": "not ready in 180s: app-76bfd787f8-42psp=Pending database-576896d569-tvjwp=Running",
+    "K5": "no intent probe defined",
+    "K6": "capabilities_not_dropped [HIGH]; run_as_root [HIGH]; allow_privilege_escalation [HIGH]; no_security_context [HIGH]"
+  },
+  "classification": "MISCONFIGURED",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Service.default.database",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_31",
+      "title": "Ensure that the seccomp profile is set to docker/default or runtime/default",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_seccomp_profile",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_28",
+      "title": "Minimize the admission of containers with the NET_RAW capability",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "capabilities_not_dropped",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_9",
+      "title": "Readiness Probe Should be Configured",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_readiness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_40",
+      "title": "Containers should run as a high UID to avoid host conflict",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "run_as_low_uid",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_23",
+      "title": "Minimize the admission of root containers",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "run_as_root",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "kube-linter",
+        "kube-linter",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_20",
+      "title": "Containers should not run with allowPrivilegeEscalation",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "allow_privilege_escalation",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_22",
+      "title": "Use read-only filesystem for containers where possible",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "writable_root_filesystem",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "kube-linter",
+        "kube-linter",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_10",
+      "title": "CPU requests should be set",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_cpu_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_30",
+      "title": "Apply security context to your containers",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_security_context",
+      "severity": "HIGH",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_11",
+      "title": "CPU limits should be set",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_cpu_limit",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "kube-linter",
+        "kube-linter",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_13",
+      "title": "Memory limits should be set",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_memory_request",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_12",
+      "title": "Memory requests should be set",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_memory_limit",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy",
+        "trivy",
+        "kube-linter",
+        "kube-linter",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_14",
+      "title": "Image Tag should be fixed - not latest or blank",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "image_tag_not_fixed",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "kube-linter",
+        "kube-linter",
+        "kube-linter"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_38",
+      "title": "Ensure that Service Account Tokens are only mounted where necessary",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_8",
+      "title": "Liveness Probe Should be Configured",
+      "resource": "Deployment.default.database",
+      "canonical_fault": "no_liveness_probe",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV2_K8S_6",
+      "title": "Minimize the admission of pods which lack an associated NetworkPolicy",
+      "resource": "Pod.default.database.app-database",
+      "canonical_fault": "no_network_policy",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0013",
+      "title": "Image tag \":latest\" used",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0013",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0021",
+      "title": "Runs with GID <= 10000",
+      "resource": "manifest.yaml",
+      "canonical_fault": "run_as_low_gid",
+      "severity": "LOW",
+      "scanners": [
+        "trivy",
+        "trivy",
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0117",
+      "title": "Prevent binding to privileged ports",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0117",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-30T20:35:58Z"
+}

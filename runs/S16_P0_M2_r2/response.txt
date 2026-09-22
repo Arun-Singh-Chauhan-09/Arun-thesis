@@ -1,0 +1,57 @@
+```yaml
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: database
+spec:
+  clusterIP: None
+  selector:
+    app: database
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox:1.36
+          command:
+            - /bin/sh
+            - -ec
+            - |
+              until nslookup database; do
+                echo "Waiting for database Service to be resolvable..."
+                sleep 2
+              done
+              echo "Database Service is now resolvable."
+      containers:
+        - name: app
+          image: nginx:1.27
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: database
+  labels:
+    app: database
+spec:
+  containers:
+    - name: database
+      image: postgres:16
+      env:
+        - name: POSTGRES_PASSWORD
+          value: "password"
+```

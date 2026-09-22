@@ -1,0 +1,48 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-shipper-pod
+spec:
+  containers:
+  - name: main-app
+    image: busybox
+    command: ["/bin/sh"]
+    args:
+    - -c
+    - |
+      while true; do
+        echo "$(date) - log entry" >> /var/log/app/app.log
+        sleep 2
+      done
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/app
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: RuntimeDefault
+  - name: sidecar-tail
+    image: busybox
+    command: ["/bin/sh"]
+    args:
+    - -c
+    - |
+      tail -f /var/log/app/app.log
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log/app
+    securityContext:
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      seccompProfile:
+        type: RuntimeDefault
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
+```

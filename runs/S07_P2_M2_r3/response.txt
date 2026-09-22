@@ -1,0 +1,32 @@
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: migration
+        image: postgres:15-alpine
+        imagePullPolicy: IfNotPresent
+        command: ["sh", "-c"]
+        args:
+        - |
+          echo "Running database migration..."
+          # Placeholder migration command - replace with actual migration script/tool
+          psql "$DATABASE_URL" -c "CREATE TABLE IF NOT EXISTS migrations (id serial PRIMARY KEY, name text, applied_at timestamptz DEFAULT now());"
+          echo "Migration completed successfully."
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://postgres:postgres@db-service:5432/appdb"
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+```

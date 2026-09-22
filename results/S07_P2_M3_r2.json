@@ -1,0 +1,105 @@
+{
+  "generation_id": "S07_P2_M3_r2",
+  "scenario": "S07",
+  "namespace": "eval-s07-p2-m3-r2",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": false,
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "1 document(s) parsed",
+    "K2": "1 resource(s) valid",
+    "K3": "job.batch/db-migration created",
+    "K4": "not ready in 180s: db-migration-j8mkx=Pending",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (7 total findings)"
+  },
+  "classification": "MISCONFIGURED",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_35",
+      "title": "Prefer using secrets as files over secrets as environment variables",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "CKV_K8S_35",
+      "severity": "UNMAPPED",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Job.default.db-migration",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV2_K8S_6",
+      "title": "Minimize the admission of pods which lack an associated NetworkPolicy",
+      "resource": "Pod.default.db-migration.app-db-migration",
+      "canonical_fault": "no_network_policy",
+      "severity": "MEDIUM",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0110",
+      "title": "Workloads in the default namespace",
+      "resource": "manifest.yaml",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0125",
+      "title": "Restrict container images to trusted registries",
+      "resource": "manifest.yaml",
+      "canonical_fault": "KSV-0125",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "job-ttl-seconds-after-finished",
+      "title": "Standalone Job does not specify ttlSecondsAfterFinished",
+      "resource": "Job/db-migration",
+      "canonical_fault": "job-ttl-seconds-after-finished",
+      "severity": "UNMAPPED",
+      "scanners": [
+        "kube-linter"
+      ]
+    }
+  ],
+  "notes": [
+    "2 finding(s) not in severity register"
+  ],
+  "evaluated_at_utc": "2026-08-23T23:40:02Z"
+}

@@ -1,0 +1,15 @@
+{
+  "generation_id": "S19_P2_M4_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "18fbe84b6f5dde8cdba07789095161b1019779656751a3c6a6f17b918789671f",
+  "manifest_bytes": 682,
+  "document_count": 1,
+  "kinds": [
+    "Deployment"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

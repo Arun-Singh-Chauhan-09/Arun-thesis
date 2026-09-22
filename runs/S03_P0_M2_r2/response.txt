@@ -1,0 +1,39 @@
+```yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  app.properties: |
+    message: Hello from ConfigMap
+    mode: production
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-reader
+  template:
+    metadata:
+      labels:
+        app: config-reader
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command: ["/bin/sh", "-c"]
+        args:
+          - echo "Reading configuration:"; cat /etc/config/app.properties; sleep 3600
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```

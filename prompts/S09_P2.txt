@@ -1,0 +1,56 @@
+You are given a Kubernetes task. Produce the Kubernetes manifest that accomplishes it.
+
+The following reference example shows the style of manifest commonly used for this kind of task. Study it, then complete the task.
+
+REFERENCE EXAMPLE - Stack Overflow: "Least-privilege RBAC with a default-deny NetworkPolicy"
+Source: by this project
+Licensed n/a - author-written.
+Modifications: author-written for this study, not sourced. Stack Overflow answers for this resource type are predominantly troubleshooting fragments rather than complete manifests; narrow verbs and resources, service account token not mounted, ingress denied by default
+
+```yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: pod-reader
+automountServiceAccountToken: false
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: pod-reader
+rules:
+- apiGroups: [""]
+  resources: ["pods", "pods/log"]
+  verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: pod-reader
+subjects:
+- kind: ServiceAccount
+  name: pod-reader
+roleRef:
+  kind: Role
+  name: pod-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-ingress
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+```
+
+TASK:
+Create a NetworkPolicy that allows ingress to the api pods only from pods labelled role=frontend, and denies everything else.
+
+OUTPUT REQUIREMENTS:
+- Respond with Kubernetes YAML only.
+- Use a single fenced code block marked yaml.
+- Do not include explanation, commentary, or notes before or after the block.
+- Use multiple YAML documents separated by --- if more than one object is required.
+- Do not set a namespace field on any object.

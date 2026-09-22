@@ -1,0 +1,53 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-credentials
+type: Opaque
+stringData:
+  password: "MyDatabasePassword123"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-reader
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-reader
+  template:
+    metadata:
+      labels:
+        app: app-reader
+    spec:
+      containers:
+      - name: app
+        image: alpine:3.19
+        command: ["/bin/sh", "-c"]
+        args:
+          - |
+            echo "Database password is $DB_PASSWORD"
+            sleep 3600
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-credentials
+              key: password
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: "50m"
+            memory: "64Mi"
+          limits:
+            cpu: "100m"
+            memory: "128Mi"
+```

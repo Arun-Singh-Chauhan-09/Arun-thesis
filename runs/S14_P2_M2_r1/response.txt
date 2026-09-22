@@ -1,0 +1,33 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-shipper
+spec:
+  restartPolicy: Always
+  containers:
+  - name: app
+    image: busybox:1.28
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      while true; do
+        echo "$(date) - log entry" >> /var/log/app.log
+        sleep 5
+      done
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log
+  - name: sidecar
+    image: busybox:1.28
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      tail -f /var/log/app.log
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
+```

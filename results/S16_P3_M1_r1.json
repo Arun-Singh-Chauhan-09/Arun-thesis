@@ -1,0 +1,25 @@
+{
+  "generation_id": "S16_P3_M1_r1",
+  "scenario": "S16",
+  "namespace": "eval-s16-p3-m1-r1",
+  "verdict": {
+    "K1": true,
+    "K2": false,
+    "K3": null,
+    "K4": null,
+    "K5": null,
+    "K6": null
+  },
+  "detail": {
+    "K1": "3 document(s) parsed",
+    "K2": "Deployment: problem validating schema. Check JSON formatting: jsonschema validation failed with 'https://raw.githubusercontent.com/y",
+    "K3": "not attempted - INVALID at K1/K2",
+    "K4": "not attempted - INVALID at K1/K2",
+    "K5": "not attempted - INVALID at K1/K2",
+    "K6": "not attempted - INVALID at K1/K2"
+  },
+  "classification": "INVALID",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-09-07T23:26:46Z"
+}

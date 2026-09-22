@@ -1,0 +1,53 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  app.properties: |
+    environment=production
+    log.level=info
+    max.connections=100
+  config.yaml: |
+    server:
+      port: 8080
+      timeout: 30s
+    feature:
+      enableCache: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: configured-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: configured-app
+  template:
+    metadata:
+      labels:
+        app: configured-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:1.25
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```

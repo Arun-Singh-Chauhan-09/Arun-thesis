@@ -1,0 +1,25 @@
+{
+  "generation_id": "S01_P0_M2_r1",
+  "scenario": "S01",
+  "namespace": "eval-s01-p0-m2-r1",
+  "verdict": {
+    "K1": false,
+    "K2": null,
+    "K3": null,
+    "K4": null,
+    "K5": null,
+    "K6": null
+  },
+  "detail": {
+    "K1": "YAML parse error: expected '<document start>', but found '<block mapping start>'\n  in \"<unicode string>\", line 2, column 1:\n    kind: Deployment\n    ^",
+    "K2": "",
+    "K3": "not attempted - INVALID at K1/K2",
+    "K4": "not attempted - INVALID at K1/K2",
+    "K5": "not attempted - INVALID at K1/K2",
+    "K6": "not attempted - INVALID at K1/K2"
+  },
+  "classification": "INVALID",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-30T16:47:30Z"
+}

@@ -1,0 +1,33 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: health-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: health-app
+  template:
+    metadata:
+      labels:
+        app: health-app
+    spec:
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 3
+          periodSeconds: 3
+```

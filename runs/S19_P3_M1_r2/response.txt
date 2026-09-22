@@ -1,0 +1,65 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: ssd-pod
+spec:
+  containers:
+  - name: app
+    image: nginx:latest
+    securityContext:
+      runAsNonRoot: true
+      runAsUser: 1000
+      runAsGroup: 3000
+      fsGroup: 2000
+  tolerations:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "batch"
+    effect: "NoSchedule"
+  nodeSelector:
+    disktype: ssd
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssd-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ssd-app
+  template:
+    metadata:
+      labels:
+        app: ssd-app
+    spec:
+      containers:
+      - name: app
+        image: nginx:latest
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 3000
+          fsGroup: 2000
+      tolerations:
+      - key: "dedicated"
+        operator: "Equal"
+        value: "batch"
+        effect: "NoSchedule"
+      nodeSelector:
+        disktype: ssd
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: ssd-node
+  labels:
+    disktype: ssd
+spec:
+  taints:
+  - key: "dedicated"
+    operator: "Equal"
+    value: "batch"
+    effect: "NoSchedule"
+```

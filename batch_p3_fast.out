@@ -1,0 +1,94 @@
+nohup: ignoring input
+matrix: 20 scenarios x 1 conditions x 2 models x 3 samples = 120 cells
+already complete: 39
+to run:           81
+[1/81] S07_P3_M3_r1  CLEAN            0m27s   eta 37m00s
+[2/81] S07_P3_M3_r2  CLEAN            0m19s   eta 31m26s
+[3/81] S07_P3_M3_r3  MISCONFIGURED    3m18s   eta 1h46m
+[4/81] S08_P3_M2_r1  CLEAN            0m24s   eta 1h26m
+[5/81] S08_P3_M2_r2  CLEAN            0m23s   eta 1h14m
+[6/81] S08_P3_M2_r3  CLEAN            0m23s   eta 1h06m
+[7/81] S08_P3_M3_r1  CLEAN            0m23s   eta 1h00m
+[8/81] S08_P3_M3_r2  CLEAN            0m28s   eta 56m19s
+[9/81] S08_P3_M3_r3  CLEAN            0m23s   eta 52m30s
+[10/81] S09_P3_M2_r1  CLEAN            0m24s   eta 49m27s
+[11/81] S09_P3_M2_r2  CLEAN            0m24s   eta 46m52s
+[12/81] S09_P3_M2_r3  CLEAN            0m24s   eta 44m39s
+[13/81] S09_P3_M3_r1  CLEAN            0m25s   eta 42m50s
+[14/81] S09_P3_M3_r2  CLEAN            0m25s   eta 41m14s
+[15/81] S09_P3_M3_r3  CLEAN            0m26s   eta 39m49s
+[16/81] S10_P3_M2_r1  MISCONFIGURED    3m15s   eta 50m02s
+[17/81] S10_P3_M2_r2  CLEAN            0m17s   eta 47m28s
+[18/81] S10_P3_M2_r3  CLEAN            0m18s   eta 45m12s
+[19/81] S10_P3_M3_r1  MISCONFIGURED    0m26s   eta 43m35s
+[20/81] S10_P3_M3_r2  MISCONFIGURED    0m27s   eta 42m07s
+[21/81] S10_P3_M3_r3  MISCONFIGURED    0m27s   eta 40m47s
+[22/81] S11_P3_M2_r1  MISCONFIGURED    0m18s   eta 39m07s
+[23/81] S11_P3_M2_r2  MISCONFIGURED    0m18s   eta 37m32s
+[24/81] S11_P3_M2_r3  MISCONFIGURED    0m16s   eta 35m59s
+[25/81] S11_P3_M3_r1  CLEAN            0m21s   eta 34m45s
+[26/81] S11_P3_M3_r2  CLEAN            0m21s   eta 33m34s
+[27/81] S11_P3_M3_r3  CLEAN            0m22s   eta 32m29s
+[28/81] S12_P3_M2_r1  MISCONFIGURED    3m15s   eta 36m54s
+[29/81] S12_P3_M2_r2  MISCONFIGURED    3m15s   eta 40m48s
+[30/81] S12_P3_M2_r3  MISCONFIGURED    3m15s   eta 44m13s
+[31/81] S12_P3_M3_r1  MISCONFIGURED    3m19s   eta 47m18s
+[32/81] S12_P3_M3_r2  MISCONFIGURED    3m18s   eta 49m59s
+[33/81] S12_P3_M3_r3  MISCONFIGURED    3m19s   eta 52m18s
+[34/81] S13_P3_M2_r1  MISCONFIGURED    0m23s   eta 50m15s
+[35/81] S13_P3_M2_r2  MISCONFIGURED    0m16s   eta 48m08s
+[36/81] S13_P3_M2_r3  MISCONFIGURED    0m16s   eta 46m07s
+[37/81] S13_P3_M3_r1  CLEAN            0m21s   eta 44m18s
+[38/81] S13_P3_M3_r2  CLEAN            0m21s   eta 42m34s
+[39/81] S13_P3_M3_r3  CLEAN            0m21s   eta 40m53s
+[40/81] S14_P3_M2_r1  MISCONFIGURED    0m17s   eta 39m13s
+[41/81] S14_P3_M2_r2  CLEAN            0m18s   eta 37m37s
+[42/81] S14_P3_M2_r3  MISCONFIGURED    3m15s   eta 38m50s
+[43/81] S14_P3_M3_r1  CLEAN            0m22s   eta 37m18s
+[44/81] S14_P3_M3_r2  CLEAN            0m21s   eta 35m47s
+[45/81] S14_P3_M3_r3  CLEAN            0m23s   eta 34m22s
+[46/81] S15_P3_M2_r1  CLEAN            0m29s   eta 33m04s
+[47/81] S15_P3_M2_r2  CLEAN            0m24s   eta 31m43s
+[48/81] S15_P3_M2_r3  CLEAN            0m29s   eta 30m29s
+[49/81] S15_P3_M3_r1  MISCONFIGURED    0m20s   eta 29m11s
+[50/81] S15_P3_M3_r2  MISCONFIGURED    0m20s   eta 27m55s
+[51/81] S15_P3_M3_r3  MISCONFIGURED    0m19s   eta 26m41s
+[52/81] S16_P3_M2_r1  MISCONFIGURED    3m16s   eta 27m07s
+[53/81] S16_P3_M2_r2  MISCONFIGURED    3m17s   eta 27m26s
+[54/81] S16_P3_M2_r3  MISCONFIGURED    3m16s   eta 27m36s
+[55/81] S16_P3_M3_r1  MISCONFIGURED    3m25s   eta 27m42s
+[56/81] S16_P3_M3_r2  MISCONFIGURED    3m26s   eta 27m42s
+[57/81] S16_P3_M3_r3  MISCONFIGURED    3m25s   eta 27m34s
+[58/81] S17_P3_M2_r1  CLEAN            3m11s   eta 27m14s
+[59/81] S17_P3_M2_r2  CLEAN            0m22s   eta 25m44s
+[60/81] S17_P3_M2_r3  MISCONFIGURED    0m17s   eta 24m16s
+[61/81] S17_P3_M3_r1  CLEAN            0m25s   eta 22m52s
+[62/81] S17_P3_M3_r2  CLEAN            0m25s   eta 21m30s
+[63/81] S17_P3_M3_r3  CLEAN            0m30s   eta 20m11s
+[64/81] S18_P3_M2_r1  MISCONFIGURED    0m18s   eta 18m51s
+[65/81] S18_P3_M2_r2  MISCONFIGURED    0m15s   eta 17m32s
+[66/81] S18_P3_M2_r3  MISCONFIGURED    0m16s   eta 16m15s
+[67/81] S18_P3_M3_r1  CLEAN            0m22s   eta 15m01s
+[68/81] S18_P3_M3_r2  CLEAN            0m24s   eta 13m49s
+[69/81] S18_P3_M3_r3  CLEAN            0m23s   eta 12m38s
+[70/81] S19_P3_M2_r1  MISCONFIGURED    3m15s   eta 11m56s
+[71/81] S19_P3_M2_r2  MISCONFIGURED    3m15s   eta 11m09s
+[72/81] S19_P3_M2_r3  MISCONFIGURED    3m14s   eta 10m18s
+[73/81] S19_P3_M3_r1  MISCONFIGURED    3m18s   eta 9m23s
+[74/81] S19_P3_M3_r2  MISCONFIGURED    3m19s   eta 8m25s
+[75/81] S19_P3_M3_r3  MISCONFIGURED    3m18s   eta 7m23s
+[76/81] S20_P3_M2_r1  MISCONFIGURED    0m18s   eta 6m05s
+[77/81] S20_P3_M2_r2  MISCONFIGURED    0m16s   eta 4m49s
+[78/81] S20_P3_M2_r3  CLEAN            0m19s   eta 3m35s
+[79/81] S20_P3_M3_r1  CLEAN            0m22s   eta 2m22s
+[80/81] S20_P3_M3_r2  CLEAN            0m21s   eta 1m10s
+[81/81] S20_P3_M3_r3  CLEAN            0m21s   eta 0m00s
+
+ran 81 cell(s) in 1h34m
+  clean          41
+  misconfigured  40
+
+SDR this session: 41/81 = 50.6%
+
+log: batch_log.jsonl
+re-run the same command to retry anything that errored

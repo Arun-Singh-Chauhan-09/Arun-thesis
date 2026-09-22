@@ -1,0 +1,67 @@
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-migration
+  labels:
+    app: db-migration
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        app: db-migration
+    spec:
+      restartPolicy: OnFailure
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: migrate
+        image: migrate/migrate:v4.17.0
+        imagePullPolicy: Always
+        command:
+        - "migrate"
+        - "-path=/migrations"
+        - "-database=$(DATABASE_URL)"
+        - "up"
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: db-migration-secret
+              key: database-url
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: migrations
+          mountPath: /migrations
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: migrations
+        configMap:
+          name: db-migration-scripts
+      - name: tmp
+        emptyDir: {}
+```

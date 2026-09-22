@@ -1,0 +1,19 @@
+{
+  "generation_id": "S10_P2_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "d6480c90dec481974876542eab2960810b8106bd50ad56a03581d9213382e9a6",
+  "manifest_bytes": 1979,
+  "document_count": 5,
+  "kinds": [
+    "DaemonSet",
+    "ConfigMap",
+    "Service",
+    "Deployment",
+    "PersistentVolumeClaim"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

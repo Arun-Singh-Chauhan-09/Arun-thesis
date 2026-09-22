@@ -1,0 +1,13 @@
+{
+  "generation_id": "S07_P2_M2_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "298a0868a8d3a79514ebf27aad13c58956e10f7ef46f1b7ea3fa4cab2ce64d01",
+  "manifest_bytes": 915,
+  "document_count": 0,
+  "kinds": [],
+  "cluster_scoped_objects": [],
+  "parses": false,
+  "parse_error": "while parsing a block mapping\n  in \"<unicode string>\", line 26, column 13:\n                cpu: \"100m\"\n                ^\nexpected <block end>, but found '<scalar>'\n  in \"<unicode string>\", line 29, column 19:\n                cpu: \"500m\"\n                      ^",
+  "repaired": false
+}

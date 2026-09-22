@@ -1,0 +1,38 @@
+```yaml
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  config.properties: |
+    app.name=example
+    app.port=8080
+    app.environment=production
+  logging.properties: |
+    level=INFO
+    logfile=/var/log/app.log
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-reader
+spec:
+  containers:
+    - name: app
+      image: nginx:alpine
+      command: ["/bin/sh", "-c"]
+      args:
+        - |
+          echo "Reading config...";
+          cat /etc/config/config.properties;
+          cat /etc/config/logging.properties;
+          sleep 3600
+      volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+  volumes:
+    - name: config-volume
+      configMap:
+        name: app-config
+```

@@ -1,0 +1,58 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  DB_HOST: "localhost"
+  DB_PORT: "5432"
+  DB_USER: "user"
+  DB_PASSWORD: "password"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+        - echo $(DB_HOST) $(DB_PORT) $(DB_USER) $(DB_PASSWORD) && sleep 3600
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: config
+        configMap:
+          name: app-config
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: app-test
+spec:
+  containers:
+  - name: test
+    image: busybox
+    command: ["sh", "-c"]
+    args:
+    - cat /config/DB_HOST /config/DB_PORT /config/DB_USER /config/DB_PASSWORD
+    volumeMounts:
+    - name: config
+      mountPath: /config
+  volumes:
+  - name: config
+    configMap:
+      name: app-config
+```

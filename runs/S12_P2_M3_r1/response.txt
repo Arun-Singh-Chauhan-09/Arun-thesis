@@ -1,0 +1,62 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: probe-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: probe-app
+  template:
+    metadata:
+      labels:
+        app: probe-app
+    spec:
+      containers:
+      - name: app
+        image: registry.k8s.io/liveness
+        imagePullPolicy: Always
+        args:
+        - /server
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+            httpHeaders:
+            - name: Custom-Header
+              value: Awesome
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 1
+          failureThreshold: 3
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "250m"
+            memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: probe-app
+spec:
+  selector:
+    app: probe-app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+```

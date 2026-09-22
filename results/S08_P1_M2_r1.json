@@ -1,0 +1,37 @@
+{
+  "generation_id": "S08_P1_M2_r1",
+  "scenario": "S08",
+  "namespace": "eval-s08-p1-m2-r1",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "1 document(s) parsed",
+    "K2": "1 resource(s) valid",
+    "K3": "ingress.networking.k8s.io/app-ingress created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (1 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Ingress.default.app-ingress",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-23T19:02:06Z"
+}

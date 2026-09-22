@@ -1,0 +1,54 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-password
+type: Opaque
+data:
+  DB_PASSWORD: cGFzc3dvcmQ=
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-app
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-password
+              key: DB_PASSWORD
+        command: ["sh", "-c"]
+        args:
+        - echo $DB_PASSWORD
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: db-app-test
+spec:
+  containers:
+  - name: test
+    image: busybox
+    env:
+    - name: DB_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: db-password
+          key: DB_PASSWORD
+    command: ["sh", "-c"]
+    args:
+    - echo $DB_PASSWORD
+```

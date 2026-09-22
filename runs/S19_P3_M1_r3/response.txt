@@ -1,0 +1,108 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssa-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ssa-app
+  template:
+    metadata:
+      labels:
+        app: ssa-app
+    spec:
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 3000
+        fsGroup: 2000
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        imagePullPolicy: Always
+        securityContext:
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop: ["ALL"]
+          seccompProfile:
+            type: RuntimeDefault
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "500m"
+            memory: "256Mi"
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: cache
+          mountPath: /var/cache/nginx
+      volumes:
+      - name: tmp
+        emptyDir: {}
+      - name: cache
+        emptyDir: {}
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: disktype
+                operator: In
+                values:
+                - ssd
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: batch
+        effect: NoSchedule
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: toleration-pod
+spec:
+  containers:
+  - name: tolerate
+    image: nginxinc/nginx-unprivileged:1.25
+  tolerations:
+  - key: dedicated
+    operator: Equal
+    value: batch
+    effect: NoSchedule
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: dedicated-node
+  labels:
+    disktype: ssd
+spec: {}
+---
+apiVersion: v1
+kind: Node
+metadata:
+  name: node
+spec: {}
+  # taint node
+---
+apiVersion: v1
+kind: Taint
+metadata:
+  name: dedicated-taint
+  annotations:
+    Dedicated: batch
+---
+# to taint a node the following command is necessary; here for record purposes only
+# kubectl taint node dedicated-node dedicated=batch:NoSchedule
+```

@@ -1,0 +1,36 @@
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: db-secret
+type: Opaque
+stringData:
+  password: "SuperSecretPassword123"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db-app
+  labels:
+    app: db-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db-app
+  template:
+    metadata:
+      labels:
+        app: db-app
+    spec:
+      containers:
+        - name: db-app
+          image: busybox:latest
+          command: ["sh", "-c", "echo Using DB password: $DB_PASSWORD; sleep 3600"]
+          env:
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secret
+                  key: password
+```

@@ -1,0 +1,28 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: batch-deployment
+spec:
+  selector:
+    matchLabels:
+      app: batch
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: batch
+    spec:
+      nodeSelector:
+        disktype: ssd
+      tolerations:
+      - key: dedicated
+        operator: Equal
+        value: batch
+        effect: NoSchedule
+      containers:
+      - name: batch-container
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+```

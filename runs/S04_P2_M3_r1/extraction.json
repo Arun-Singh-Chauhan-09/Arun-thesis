@@ -1,0 +1,16 @@
+{
+  "generation_id": "S04_P2_M4_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "53f6e7f7281b41739919d91eb57fa34b857c4a21e55e78f0856e5ef96fe9b3f6",
+  "manifest_bytes": 1347,
+  "document_count": 2,
+  "kinds": [
+    "Secret",
+    "Deployment"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

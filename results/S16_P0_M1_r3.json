@@ -1,0 +1,25 @@
+{
+  "generation_id": "S16_P0_M1_r3",
+  "scenario": "S16",
+  "namespace": "eval-s16-p0-m1-r3",
+  "verdict": {
+    "K1": false,
+    "K2": null,
+    "K3": null,
+    "K4": null,
+    "K5": null,
+    "K6": null
+  },
+  "detail": {
+    "K1": "YAML parse error: while scanning a simple key\n  in \"<unicode string>\", line 42, column 5:\n        -echo \"Database is available\"; s ... \n        ^\ncould not find expected ':'\n  in \"<unicode string>\", line 43, column 3:\n      initContainers:\n      ^",
+    "K2": "",
+    "K3": "not attempted - INVALID at K1/K2",
+    "K4": "not attempted - INVALID at K1/K2",
+    "K5": "not attempted - INVALID at K1/K2",
+    "K6": "not attempted - INVALID at K1/K2"
+  },
+  "classification": "INVALID",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-30T20:15:57Z"
+}

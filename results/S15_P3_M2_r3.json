@@ -1,0 +1,25 @@
+{
+  "generation_id": "S15_P3_M2_r3",
+  "scenario": "S15",
+  "namespace": "eval-s15-p3-m2-r3",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "2 document(s) parsed",
+    "K2": "2 resource(s) valid",
+    "K3": "namespace/quota-namespace created\nresourcequota/compute-quota created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (0 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-09-07T21:37:24Z"
+}

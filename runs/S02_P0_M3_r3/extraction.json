@@ -1,0 +1,17 @@
+{
+  "generation_id": "S02_P0_M4_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "1494fe5e80ce9db30dbedcaefa3f1a7f0dcd180a406eed99df68ee2ee599fff3",
+  "manifest_bytes": 510,
+  "document_count": 3,
+  "kinds": [
+    "ServiceAccount",
+    "Role",
+    "RoleBinding"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

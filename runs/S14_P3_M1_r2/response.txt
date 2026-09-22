@@ -1,0 +1,31 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: logging-pod
+spec:
+  containers:
+  - name: main-container
+    image: busybox
+    command: ["sh", "-c"]
+    args:
+    - while true; do
+        echo "$(date)" >> /var/log/app.log;
+        sleep 1;
+      done
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log
+  - name: sidecar-container
+    image: busybox
+    command: ["sh", "-c"]
+    args:
+    - tail -f /var/log/app.log
+    volumeMounts:
+    - name: log-volume
+      mountPath: /var/log
+  volumes:
+  - name: log-volume
+    emptyDir: {}
+---
+```

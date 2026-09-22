@@ -1,0 +1,17 @@
+{
+  "generation_id": "S02_P3_M1_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "48d8599e82c8faf26c2403b0d6f5f39743968830e413feccce44953e19ef033a",
+  "manifest_bytes": 502,
+  "document_count": 3,
+  "kinds": [
+    "ServiceAccount",
+    "Role",
+    "RoleBinding"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

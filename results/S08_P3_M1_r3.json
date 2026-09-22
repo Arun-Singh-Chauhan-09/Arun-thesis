@@ -1,0 +1,49 @@
+{
+  "generation_id": "S08_P3_M1_r3",
+  "scenario": "S08",
+  "namespace": "eval-s08-p3-m1-r3",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "2 document(s) parsed",
+    "K2": "2 resource(s) valid",
+    "K3": "ingress.networking.k8s.io/example-ingress created\nservice/hardened-app created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (2 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "Ingress.default.example-ingress",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov",
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "kube-linter",
+      "rule_id": "dangling-service",
+      "title": "no pods found matching service labels (map[app:hardened-app])",
+      "resource": "Service/hardened-app",
+      "canonical_fault": "dangling_service",
+      "severity": "MEDIUM",
+      "scanners": [
+        "kube-linter"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-09-07T23:11:42Z"
+}

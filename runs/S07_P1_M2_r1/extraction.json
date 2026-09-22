@@ -1,0 +1,15 @@
+{
+  "generation_id": "S07_P1_M2_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "bc4737be017d6b28e2741c7c87bdc675edbb43736ee40f28b1a73a38e5fa6c78",
+  "manifest_bytes": 218,
+  "document_count": 1,
+  "kinds": [
+    "Job"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

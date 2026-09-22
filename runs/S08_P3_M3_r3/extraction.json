@@ -1,0 +1,17 @@
+{
+  "generation_id": "S08_P3_M3_r3",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "0725382d5016032af7907772f677391df1d681aea147d7378a5a0ee4b254e271",
+  "manifest_bytes": 1847,
+  "document_count": 3,
+  "kinds": [
+    "Deployment",
+    "Service",
+    "Ingress"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

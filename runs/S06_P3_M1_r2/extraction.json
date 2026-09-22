@@ -1,0 +1,15 @@
+{
+  "generation_id": "S06_P3_M1_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "984c9c88925f201b6c2adc25f76e2b942f1d683a08beb5b9aceb5c19f6bb761e",
+  "manifest_bytes": 1349,
+  "document_count": 1,
+  "kinds": [
+    "CronJob"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

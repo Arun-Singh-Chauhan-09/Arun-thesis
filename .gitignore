@@ -1,22 +1,14 @@
-# generated data — large, and regenerable from the scripts
-runs/
-runs_excluded/
-results/
-results_excluded/
-prompts/
-batch_log.jsonl
-*.out
-pod_lifecycle.log
-
-# outputs
-*.xlsx
+# temp / lock / secrets
 ~$*
-
-# secrets — nothing here should ever be committed, but be explicit
+*.tmp
 .env
 *.key
-
-# python
 __pycache__/
 *.pyc
 *.bak
+pod_lifecycle.log
+
+# local backup / superseded data — not needed in the repo
+results_excluded/
+runs_excluded/
+results_excluded_oldP3/

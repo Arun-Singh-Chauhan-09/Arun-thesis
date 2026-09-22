@@ -1,0 +1,59 @@
+{
+  "generation_id": "S06_P2_M3_r2",
+  "scenario": "S06",
+  "namespace": "eval-s06-p2-m3-r2",
+  "verdict": {
+    "K1": true,
+    "K2": true,
+    "K3": true,
+    "K4": "N/A",
+    "K5": "N/A",
+    "K6": true
+  },
+  "detail": {
+    "K1": "1 document(s) parsed",
+    "K2": "1 resource(s) valid",
+    "K3": "cronjob.batch/nightly-backup created",
+    "K4": "manifest creates no Pods - vacuity rule applied",
+    "K5": "no intent probe defined",
+    "K6": "0 HIGH/CRITICAL after dedup (3 total findings)"
+  },
+  "classification": "CLEAN",
+  "findings": [
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_43",
+      "title": "Image should use digest",
+      "resource": "CronJob.default.nightly-backup",
+      "canonical_fault": "image_not_digest_pinned",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "checkov",
+      "rule_id": "CKV_K8S_21",
+      "title": "The default namespace should not be used",
+      "resource": "CronJob.default.nightly-backup",
+      "canonical_fault": "default_namespace_used",
+      "severity": "LOW",
+      "scanners": [
+        "checkov"
+      ]
+    },
+    {
+      "scanner": "trivy",
+      "rule_id": "KSV-0110",
+      "title": "Workloads in the default namespace",
+      "resource": "manifest.yaml",
+      "canonical_fault": "sa_token_automount",
+      "severity": "MEDIUM",
+      "scanners": [
+        "trivy"
+      ]
+    }
+  ],
+  "notes": [],
+  "evaluated_at_utc": "2026-08-23T23:11:39Z"
+}

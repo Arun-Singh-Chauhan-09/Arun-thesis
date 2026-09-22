@@ -1,0 +1,25 @@
+{
+  "generation_id": "S10_P3_M1_r3",
+  "scenario": "S10",
+  "namespace": "eval-s10-p3-m1-r3",
+  "verdict": {
+    "K1": false,
+    "K2": null,
+    "K3": null,
+    "K4": null,
+    "K5": null,
+    "K6": null
+  },
+  "detail": {
+    "K1": "YAML parse error: while parsing a block mapping\n  in \"<unicode string>\", line 53, column 1:\n    apiVersion: rbac.authorization.k ... \n    ^\nexpected <block end>, but found '<block mapping start>'\n  in \"<unicode string>\", line 60, column 2:\n     subjects:\n     ^",
+    "K2": "",
+    "K3": "not attempted - INVALID at K1/K2",
+    "K4": "not attempted - INVALID at K1/K2",
+    "K5": "not attempted - INVALID at K1/K2",
+    "K6": "not attempted - INVALID at K1/K2"
+  },
+  "classification": "INVALID",
+  "findings": [],
+  "notes": [],
+  "evaluated_at_utc": "2026-09-07T23:15:31Z"
+}

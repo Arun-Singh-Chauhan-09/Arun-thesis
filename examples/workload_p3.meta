@@ -1,5 +1,5 @@
-title: Composed contrast: unhardened example and its correction
-url: https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/
+title: Two hardened examples of the same family
+url: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
 author: Kubernetes Authors
 license: CC BY 4.0
-note: composed by this project from the P1 manifest (https://kubernetes.io/docs/tasks/run-application/run-stateless-application-deployment/) and the P2 manifest (https://kubernetes.io/docs/tasks/configure-pod-container/security-context/); no third source
+note: composed by this project from the P2 hardened manifest and a second hardened manifest (workload_p3b) of a different resource in the same family; both examples are secure

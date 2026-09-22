@@ -1,0 +1,35 @@
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: topology-spread-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: topology-spread-app
+  template:
+    metadata:
+      labels:
+        app: topology-spread-app
+    spec:
+      topologySpreadConstraints:
+      - maxSkew: 1
+        topologyKey: kubernetes.io/hostname
+        whenUnsatisfiable: DoNotSchedule
+        labelSelector:
+          matchLabels:
+            app: topology-spread-app
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "128Mi"
+          limits:
+            cpu: "200m"
+            memory: "256Mi"
+```

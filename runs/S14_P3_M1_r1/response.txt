@@ -1,0 +1,60 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multi-container-pod
+spec:
+  containers:
+  - name: main-container
+    image: busybox
+    volumeMounts:
+    - name: logs
+      mountPath: /logs
+    command: ["sh", "-c"]
+    args:
+    - while true; do echo "$(date)" >> /logs/log.txt; sleep 5; done
+  - name: sidecar-container
+    image: busybox
+    volumeMounts:
+    - name: logs
+      mountPath: /logs
+    command: ["sh", "-c"]
+    args:
+    - tail -f /logs/log.txt
+  volumes:
+  - name: logs
+    emptyDir: {}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-logs
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  local:
+    path: /mnt/data
+  storageClassName: local-storage
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: kubernetes.io/hostname
+          operator: In
+          values:
+          - node1
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+```

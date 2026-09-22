@@ -1,0 +1,16 @@
+{
+  "generation_id": "S18_P0_M1_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "44e4c002400a4b57ad0e08c8f6180c36c6a129111cf13663b6c12d2397a457a5",
+  "manifest_bytes": 756,
+  "document_count": 2,
+  "kinds": [
+    "Deployment",
+    "Pod"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

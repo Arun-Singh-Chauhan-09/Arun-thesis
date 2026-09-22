@@ -1,0 +1,57 @@
+```yaml
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: log-collection-agent
+spec:
+  selector:
+    matchLabels:
+      name: log-collection-agent
+  template:
+    metadata:
+      labels:
+        name: log-collection-agent
+    spec:
+      containers:
+      - name: log-collection-agent
+        image: log-collection-agent:latest
+        volumeMounts:
+        - name: log-directory
+          mountPath: /var/log
+      volumes:
+      - name: log-directory
+        hostPath:
+          path: /var/log
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 1
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: log-collection-agent
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - pods
+  verbs:
+  - list
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: log-collection-agent
+roleRef:
+  name: log-collection-agent
+  kind: ClusterRole
+subjects:
+- kind: ServiceAccount
+  name: log-collection-agent
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: log-collection-agent
+```

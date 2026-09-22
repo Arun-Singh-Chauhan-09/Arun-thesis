@@ -1,0 +1,61 @@
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: log-tailer-pod
+spec:
+  containers:
+  - name: app
+    image: busybox:1.36
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      while true; do
+        echo "$(date): log entry from app" >> /var/log/app.log
+        sleep 5
+      done
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /var/log
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      runAsNonRoot: true
+      runAsUser: 1000
+      readOnlyRootFilesystem: true
+  - name: sidecar-tailer
+    image: busybox:1.36
+    command: ["/bin/sh", "-c"]
+    args:
+    - |
+      tail -f /shared/logs/app.log
+    volumeMounts:
+    - name: shared-logs
+      mountPath: /shared/logs
+    resources:
+      requests:
+        cpu: "50m"
+        memory: "64Mi"
+      limits:
+        cpu: "200m"
+        memory: "128Mi"
+    securityContext:
+      allowPrivilegeEscalation: false
+      capabilities:
+        drop: ["ALL"]
+      runAsNonRoot: true
+      runAsUser: 1000
+      readOnlyRootFilesystem: true
+  volumes:
+  - name: shared-logs
+    emptyDir: {}
+  restartPolicy: Always
+```

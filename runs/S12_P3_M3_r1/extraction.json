@@ -1,0 +1,15 @@
+{
+  "generation_id": "S12_P3_M3_r1",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "dfed46f92186bcf6f2c32bb4bf0fbe35d92711c832fb086e597213e2d8c288d2",
+  "manifest_bytes": 1646,
+  "document_count": 1,
+  "kinds": [
+    "Deployment"
+  ],
+  "cluster_scoped_objects": [],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

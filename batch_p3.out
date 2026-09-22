@@ -1,0 +1,7 @@
+nohup: ignoring input
+matrix: 20 scenarios x 1 conditions x 3 models x 3 samples = 180 cells
+already complete: 0
+to run:           180
+[1/180] S01_P3_M1_r1  MISCONFIGURED    3m21s   eta 10h01m
+[2/180] S01_P3_M1_r2  MISCONFIGURED    3m14s   eta 9h47m
+[3/180] S01_P3_M1_r3  MISCONFIGURED    3m20s   eta 9h47m

@@ -1,0 +1,18 @@
+{
+  "generation_id": "S11_P0_M1_r3",
+  "scenario": "S11",
+  "condition": "P0",
+  "model_label": "M1",
+  "model_id": "meta-llama/Llama-3.3-70B-Instruct-Turbo",
+  "provider_base_url": "https://api.together.xyz/v1",
+  "sample": 3,
+  "temperature": 1.0,
+  "top_p": 1.0,
+  "max_tokens": 4096,
+  "finish_reason": "stop",
+  "prompt_tokens": 143,
+  "completion_tokens": 210,
+  "elapsed_seconds": 2.23,
+  "response_sha256": "c433abd591bf33272570a1ab899e5a8af1b5a7e56da295e37d34251872fcb2c7",
+  "generated_at_utc": "2026-08-30T19:12:02Z"
+}

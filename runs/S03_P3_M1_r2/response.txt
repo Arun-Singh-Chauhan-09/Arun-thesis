@@ -1,0 +1,42 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  APP_NAME: "my-app"
+  APP_VERSION: "1.0"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: busybox
+        command: ["sh", "-c"]
+        args:
+        - echo $(APP_NAME) $(APP_VERSION) && sleep 3600
+        volumeMounts:
+        - name: config
+          mountPath: /config
+      volumes:
+      - name: config
+        configMap:
+          name: app-config
+          items:
+          - key: APP_NAME
+            path: app_name
+          - key: APP_VERSION
+            path: app_version
+```

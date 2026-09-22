@@ -1,0 +1,27 @@
+{
+  "generation_id": "S10_P1_M4_r2",
+  "extraction_method": "fenced",
+  "fenced_blocks_kept": 1,
+  "manifest_sha256": "0bcd00279140f607c06b47023b84d58364a241e08596a5f7b9f80a1e04789832",
+  "manifest_bytes": 1779,
+  "document_count": 4,
+  "kinds": [
+    "ServiceAccount",
+    "ClusterRole",
+    "ClusterRoleBinding",
+    "DaemonSet"
+  ],
+  "cluster_scoped_objects": [
+    {
+      "kind": "ClusterRole",
+      "name": "log-collector"
+    },
+    {
+      "kind": "ClusterRoleBinding",
+      "name": "log-collector"
+    }
+  ],
+  "parses": true,
+  "parse_error": null,
+  "repaired": false
+}

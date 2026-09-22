@@ -1,0 +1,49 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  CONFIG_KEY: config-value
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-deployment
+spec:
+  selector:
+    matchLabels:
+      app: config-app
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: config-app
+    spec:
+      containers:
+      - name: config-container
+        image: busybox
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: config-pod
+spec:
+  containers:
+  - name: config-container
+    image: busybox
+    volumeMounts:
+    - name: config-volume
+      mountPath: /etc/config
+  volumes:
+  - name: config-volume
+    configMap:
+      name: app-config
+```

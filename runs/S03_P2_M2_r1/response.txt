@@ -1,0 +1,40 @@
+```yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  app.properties: |
+    # application configuration
+    database.host=db.example.com
+    database.port=5432
+    feature.enabled=true
+    log.level=INFO
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-reader-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-reader-app
+  template:
+    metadata:
+      labels:
+        app: config-reader-app
+    spec:
+      containers:
+      - name: app
+        image: nginxinc/nginx-unprivileged:1.25
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: app-config
+```
