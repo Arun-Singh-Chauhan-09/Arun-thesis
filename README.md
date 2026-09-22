@@ -246,6 +246,40 @@ underpins the thesis's Harness Validation section, so keep it in the repo.
 
 ---
 
+## LLM-as-Correction (follow-up test)
+
+A small follow-up experiment tests whether an LLM can *repair* the manifests it got
+wrong. Eighteen manifests were drawn from the study's own `MISCONFIGURED` generations —
+each one a real K6 failure carrying at least one HIGH-severity fault — sampled evenly
+across the three models and four conditions. Each manifest, together with its scanner
+findings, was returned to the LLM (Claude) with a request to repair it, and the corrected
+manifest was re-checked against the same HIGH-fault criteria used at K6.
+
+**Result.** All 18 (100%) had every HIGH-severity fault removed after one correction
+pass — the HIGH-fault count fell from 72 to 0. The catch is deployability: aggressive
+hardening (read-only root filesystem, run-as-non-root) can break a workload, and 13 of
+the 18 corrected manifests carry such a risk that a full re-run of K3–K6 would need to
+confirm. So an LLM fixes security faults reliably, but the fix must be re-validated for
+deployability, not assumed.
+
+The test lives in `llm_correction_test/`:
+
+```
+llm_correction_test/
+├── LLM_as_Correction_Test.xlsx   per-manifest before/after + summary (report.xlsx naming)
+├── original/                     the 18 failing manifests (real run IDs)
+├── corrected/                    the 18 repaired manifests
+└── results.json                  machine-readable verdicts
+```
+
+> **Verification note.** Corrected manifests were re-checked against the canonical
+> HIGH-fault definitions, not re-deployed or re-scanned with the full three-scanner stack,
+> so this is a proof of concept rather than a second full evaluation. Using an LLM to
+> *judge* security and intent (LLM-as-Judge) instead of the scanner ladder is left as
+> future work.
+
+---
+
 ## Project structure
 
 ```
@@ -253,6 +287,7 @@ underpins the thesis's Harness Validation section, so keep it in the repo.
 ├── run_pilot.sh              single-cell pilot runner → KPI_result.xlsx
 ├── severity_register.csv     rule_id → canonical fault + severity
 ├── report.xlsx               aggregated results workbook (per-manifest grid + summaries)
+├── llm_correction_test/      LLM-as-Correction follow-up (workbook + original/corrected)
 ├── prompts/                  scenario definitions + assembled prompts
 ├── examples/                 reference manifests (hardened / unhardened, per family)
 ├── figures/                  charts rendered by report.py
